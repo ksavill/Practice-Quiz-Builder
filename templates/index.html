@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
+    <title>Home Page</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Quiz App</h1>
+    </header>
+    <div class="container">
+        <h1>Home Page</h1>
+        <div id="versionContainer">
+            <h2>Version: <span id="versionText"></span></h2>
+        </div>
+        <a href="/quiz_builder" class="link-button">Build a New Quiz</a>
+        <h2>Practice Existing Quiz</h2>
+        <ul class="quiz-list" id="quizList"></ul>
+        <h2>Import Quiz</h2>
+        <input type="file" id="importQuizInput" accept=".json">
+    </div>
+
+    <script>
+        async function fetchVersion() {
+            const response = await fetch('/version');
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('versionText').textContent = data.version;
+            } else {
+                console.error('Failed to fetch version');
+            }
+        }
+
+        async function fetchQuizzes() {
+            const response = await fetch('/api/quizzes');
+            const quizzes = await response.json();
+            const quizList = document.getElementById('quizList');
+            quizList.innerHTML = ''; // Clear the list before appending new items
+            quizzes.forEach((quiz) => {
+                const li = document.createElement('li');
+                li.classList.add('quiz-item');
+
+                const quizLink = document.createElement('a');
+                quizLink.href = `/quiz_practice/${quiz.id}`;
+                quizLink.textContent = quiz.title;
+                quizLink.classList.add('quiz-link');
+
+                const buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('button-container');
+
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Edit';
+                editButton.classList.add('edit-btn');
+                editButton.onclick = () => {
+                    window.location.href = `/quiz_builder/${quiz.id}`;
+                };
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete Quiz';
+                deleteButton.classList.add('delete-btn');
+                deleteButton.onclick = async () => {
+                    if (confirm('Are you sure you want to delete this quiz?')) {
+                        await deleteQuiz(quiz.id);
+                        fetchQuizzes(); // Refresh the list of quizzes
+                    }
+                };
+
+                buttonContainer.appendChild(editButton);
+                buttonContainer.appendChild(deleteButton);
+
+                li.appendChild(quizLink);
+                li.appendChild(buttonContainer);
+                quizList.appendChild(li);
+            });
+        }
+
+        async function deleteQuiz(quizId) {
+            const response = await fetch(`/api/quizzes/${quizId}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                alert('Failed to delete quiz');
+            }
+        }
+
+        document.getElementById('importQuizInput').addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    try {
+                        const quizData = JSON.parse(e.target.result);
+                        const quizTitle = file.name.replace(/\.[^/.]+$/, "");
+                        const formattedQuiz = {
+                            title: quizTitle,
+                            questions: quizData.map(q => ({
+                                question: q.question,
+                                options: q.options,
+                                correct_answer: q["correct answer"]
+                            }))
+                        };
+
+                        const response = await fetch('/api/quizzes', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formattedQuiz)
+                        });
+
+                        if (response.ok) {
+                            alert('Quiz imported successfully!');
+                            fetchQuizzes(); // Refresh the list of quizzes
+                        } else {
+                            alert('Failed to import quiz');
+                        }
+                    } catch (error) {
+                        alert('Invalid JSON file');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        fetchVersion();
+        fetchQuizzes();
+    </script>
+</body>
+</html>

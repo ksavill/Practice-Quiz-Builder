@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
+    <title>Quiz Practice</title>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="nav-link">Home</a>
+</nav>
+<h1>Quiz Practice</h1>
+<div class="container">
+    <div id="displayOptions">
+        <!-- <label>
+            <input type="radio" name="displayOption" value="vertical" checked> Vertical
+        </label>
+        <label>
+            <input type="radio" name="displayOption" value="horizontal"> Horizontal
+        </label> -->
+        <button class="add-btn" onclick="reloadQuestions()">Reload Quiz</button>
+    </div>
+
+    <div id="quizContainer"></div>
+</div>
+
+<script>
+    async function fetchQuiz(quizId) {
+        const response = await fetch(`/api/quizzes/${quizId}`);
+        if (response.ok) {
+            const data = await response.json();
+            displayQuestions(data);
+        } else {
+            alert("Failed to load quiz");
+        }
+    }
+
+    function selectAnswer(index, selected) {
+        const data = JSON.parse(localStorage.getItem('questions'));
+        const feedback = document.getElementById(`feedback${index}`);
+        const correctAnswer = data[index].correct_answer;
+        feedback.innerHTML = `Selected: ${selected}<br>Correct: ${correctAnswer}<br>`;
+        if (selected === correctAnswer) {
+            feedback.innerHTML += `<span class="correct">CORRECT</span>`;
+        } else {
+            feedback.innerHTML += `<span class="wrong">WRONG</span>`;
+        }
+    }
+
+    function displayQuestions(data) {
+        localStorage.setItem('questions', JSON.stringify(data.questions));
+        const container = document.getElementById('quizContainer');
+        container.innerHTML = '';
+
+        // const isVertical = document.querySelector('input[name="displayOption"]:checked').value === 'vertical';
+        const isVertical = true;
+        data.questions.forEach((item, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = isVertical ? 'vertical' : 'horizontal';
+            questionDiv.innerHTML = `
+                <p>${item.question}</p>
+                ${item.options.map(option => `<button class="add-btn" onclick="selectAnswer(${index}, '${option}')">${option}</button>${isVertical ? '<br>' : ''}`).join('')}
+                <p id="feedback${index}"></p>
+            `;
+            container.appendChild(questionDiv);
+        });
+    }
+
+    function reloadQuestions() {
+        const quizId = {{ quiz.id | tojson }};
+        fetchQuiz(quizId);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const quizId = {{ quiz.id | tojson }};
+        fetchQuiz(quizId);
+    });
+</script>
+</body>
+</html>

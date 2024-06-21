@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
+    <title>Quiz Builder</title>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="nav-link">Home</a>
+</nav>
+    
+<h1>Quiz Builder</h1>
+
+<div>
+    <label for="quizTitle">Quiz Title:</label>
+    <input type="text" id="quizTitle" placeholder="Enter the quiz title...">
+</div>
+
+
+
+<div id="quizBuilderContainer"></div>
+<br>
+<button onclick="addQuestion()" class="add-btn">Add Question</button>
+<br>
+<button id="submitButton" onclick="exportQuiz()" class="add-btn">Create Quiz</button>
+
+<script>
+    let quizData = [];
+    let questionCounter = 0;
+    let isEditMode = false;
+    let quizId = null;
+
+    function addQuestion(question = {}) {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question-container');
+        questionDiv.dataset.uid = `q${questionCounter++}`;
+        questionDiv.innerHTML = `
+            <label class="question-label">Question:</label>
+            <textarea class="question-text" placeholder="Enter the question here...">${question.question || ''}</textarea>
+            <div class="answers"></div>
+            <button onclick="addAnswer(this.parentNode)" class="add-btn">Add Answer</button>
+            <button onclick="removeQuestion(this.parentNode)" class="delete-btn">Delete Question</button>
+        `;
+        const answersDiv = questionDiv.querySelector('.answers');
+        if (question.options) {
+            question.options.forEach(option => addAnswer(questionDiv, option, option === question.correct_answer));
+        }
+        document.getElementById('quizBuilderContainer').appendChild(questionDiv);
+        updateQuestionLabels();
+    }
+
+    function addAnswer(questionDiv, answer = '', isCorrect = false) {
+        const answerDiv = document.createElement('div');
+        answerDiv.classList.add('answer-container');
+        answerDiv.innerHTML = `
+            <label>Answer:</label>
+            <input type="text" class="answer-text" placeholder="Enter the answer here..." value="${answer}">
+            <input type="radio" name="correct${questionDiv.dataset.uid}" class="is-correct" ${isCorrect ? 'checked' : ''}>
+            <label>Correct</label>
+            <button onclick="removeElement(this.parentNode)" class="delete-btn">Delete Answer</button>
+        `;
+        questionDiv.querySelector('.answers').appendChild(answerDiv);
+    }
+
+    function removeElement(element) {
+        element.parentNode.removeChild(element);
+    }
+
+    function removeQuestion(questionDiv) {
+        questionDiv.parentNode.removeChild(questionDiv);
+        updateQuestionLabels();
+    }
+
+    function updateQuestionLabels() {
+        const questionContainers = document.querySelectorAll('.question-container');
+        questionContainers.forEach((container, index) => {
+            const label = container.querySelector('.question-label');
+            label.textContent = `Question ${index + 1}:`;
+        });
+    }
+
+    async function exportQuiz() {
+        quizData = [];
+        const quizTitle = document.getElementById('quizTitle').value;
+        document.querySelectorAll('.question-container').forEach((qDiv) => {
+            const questionText = qDiv.querySelector('.question-text').value;
+            const answersDiv = qDiv.querySelector('.answers');
+            let options = [];
+            let correctAnswer = '';
+            answersDiv.querySelectorAll('.answer-container').forEach((aDiv) => {
+                const answerText = aDiv.querySelector('.answer-text').value;
+                options.push(answerText);
+                if (aDiv.querySelector('.is-correct').checked) {
+                    correctAnswer = answerText;
+                }
+            });
+            quizData.push({ question: questionText, options, correct_answer: correctAnswer });
+        });
+
+        const url = isEditMode ? `/api/quizzes/${quizId}` : '/api/quizzes';
+        const method = isEditMode ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: quizTitle, questions: quizData })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            alert(`Failed to save quiz. Message: ${result.detail}`);
+        } else {
+            alert(`Quiz ${isEditMode ? 'updated' : 'saved'} with ID: ${result.quiz_id}`);
+            window.location.href = '/';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        {% if quiz is defined %}
+            const quizDataElement = {{ quiz | tojson | safe }};
+            if (quizDataElement) {
+                isEditMode = true;
+                quizId = quizDataElement.id;
+                document.getElementById('quizTitle').value = quizDataElement.title;
+                quizDataElement.questions.forEach(question => addQuestion(question));
+                document.getElementById('submitButton').textContent = 'Submit Changes';
+            }
+        {% endif %}
+    });
+</script>
+</body>
+</html>
