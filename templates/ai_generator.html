@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
+    <title>AI Question Generator</title>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/class_management" class="nav-link">Manage Classes</a>
+    <a href="/question_bank" class="nav-link">Question Bank</a>
+    <a href="/quiz_builder" class="nav-link">Create Quiz</a>
+</nav>
+
+<div class="container">
+    <h1>AI Question Generator</h1>
+    
+    <!-- System Prompt Management Section -->
+    <div class="prompt-management-container">
+        <h2>System Prompt Management</h2>
+        
+        <div class="prompt-controls">
+            <div class="form-group">
+                <label for="activePromptDisplay">Current Active Prompt:</label>
+                <div id="activePromptDisplay" class="active-prompt-display">Loading...</div>
+                <div class="prompt-actions">
+                    <button onclick="editPrompt()" class="add-btn">Edit Prompt</button>
+                    <button onclick="viewPromptHistory()" class="add-btn">View History</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Edit Prompt Modal-like Section (hidden by default) -->
+        <div id="editPromptSection" class="edit-prompt-section" style="display: none;">
+            <h3>Edit System Prompt</h3>
+            <div class="form-group">
+                <label for="promptDescription">Description (what changes are you making?):</label>
+                <input type="text" id="promptDescription" placeholder="e.g., Improved fill-in-blank handling">
+            </div>
+            <div class="form-group">
+                <label for="promptText">System Prompt:</label>
+                <textarea id="promptText" rows="15" placeholder="Enter the system prompt for AI question generation..."></textarea>
+            </div>
+            <div class="prompt-edit-actions">
+                <button onclick="savePrompt()" class="add-btn">Save New Version</button>
+                <button onclick="cancelEditPrompt()" class="delete-btn">Cancel</button>
+            </div>
+        </div>
+        
+        <!-- Prompt History Section (hidden by default) -->
+        <div id="promptHistorySection" class="prompt-history-section" style="display: none;">
+            <h3>Prompt Version History</h3>
+            <div id="promptHistoryList"></div>
+            <button onclick="closePromptHistory()" class="delete-btn">Close History</button>
+        </div>
+    </div>
+
+    <!-- AI Generation Section -->
+    <div class="ai-generation-container">
+        <h2>Generate Questions with AI</h2>
+        
+        <div class="generation-tabs">
+            <button class="tab-btn active" onclick="switchTab('text')">Text Input</button>
+            <button class="tab-btn" onclick="switchTab('image')">Image Upload</button>
+        </div>
+        
+        <!-- Text Input Tab -->
+        <div id="textTab" class="tab-content active">
+            <div class="form-group">
+                <label for="textContent">Paste your text content:</label>
+                <textarea id="textContent" rows="8" placeholder="Paste educational content, questions, or any text you want to generate questions from..."></textarea>
+            </div>
+        </div>
+        
+        <!-- Image Upload Tab -->
+        <div id="imageTab" class="tab-content">
+            <div class="form-group">
+                <label for="imageUpload">Upload an image or paste a screenshot:</label>
+                <input type="file" id="imageUpload" accept="image/*" onchange="handleImageUpload(event)">
+                <div class="paste-area" id="pasteArea" onclick="focusPasteArea()">
+                    <p>📋 Click here and paste a screenshot (Ctrl+V)</p>
+                    <small>Or use the file input above</small>
+                </div>
+                <div id="imagePreview" class="image-preview-container"></div>
+            </div>
+        </div>
+        
+        <!-- Generation Parameters -->
+        <div class="generation-params">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="generationClass">Class:</label>
+                    <select id="generationClass" required>
+                        <option value="">Select a class...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="numQuestions">Number of Questions:</label>
+                    <input type="number" id="numQuestions" value="5" min="1" max="20">
+                </div>
+                
+                <div class="form-group">
+                    <label for="minOptions">Minimum Options (Multiple Choice):</label>
+                    <input type="number" id="minOptions" value="4" min="2" max="8">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="questionTypes">Question Types:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="questionTypes" value="multiple_choice" checked> Multiple Choice</label>
+                        <label><input type="checkbox" name="questionTypes" value="fill_blank" checked> Fill in the Blank</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="difficultyPreference">Difficulty Preference:</label>
+                    <select id="difficultyPreference">
+                        <option value="mixed">Mixed</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="customInstructions">Custom Instructions (optional):</label>
+                <textarea id="customInstructions" rows="3" placeholder="Any specific instructions for the AI (e.g., focus on definitions, include formulas, etc.)"></textarea>
+            </div>
+            
+            <button onclick="generateQuestions()" class="generate-btn">Generate Questions with AI</button>
+        </div>
+    </div>
+
+    <!-- Generated Questions Display -->
+    <div id="generatedQuestionsSection" class="generated-questions-section" style="display: none;">
+        <div class="generated-header">
+            <h2>Generated Questions</h2>
+            <div class="generation-controls">
+                <label>
+                    <input type="checkbox" id="cumulativeMode" checked> Keep adding to existing questions
+                </label>
+            </div>
+        </div>
+        
+        <div id="generationInfo" class="generation-info"></div>
+        <div id="generatedQuestionsList"></div>
+        
+        <div class="bulk-actions">
+            <button onclick="addAllToBank()" class="add-btn" id="addAllBtn">Add All to Question Bank</button>
+            <button onclick="addSelectedToBank()" class="add-btn" id="addSelectedBtn" style="display: none;">Add Selected to Question Bank</button>
+            <button onclick="selectAllQuestions()" class="add-btn">Select All</button>
+            <button onclick="clearSelected()" class="add-btn">Clear Selection</button>
+            <button onclick="clearGenerated()" class="delete-btn">Clear All</button>
+        </div>
+    </div>
+    
+    <!-- Loading indicator -->
+    <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+        <div class="spinner"></div>
+        <p>AI is generating questions... This may take a moment.</p>
+    </div>
+</div>
+
+<script>
+    let currentActiveTab = 'text';
+    let generatedQuestions = [];
+    let uploadedImageData = null;
+    let selectedQuestions = new Set();
+    let questionIdCounter = 0;
+
+    async function fetchClasses() {
+        try {
+            const response = await fetch('/api/classes');
+            const classes = await response.json();
+            const select = document.getElementById('generationClass');
+            
+            select.innerHTML = '<option value="">Select a class...</option>';
+            classes.forEach(cls => {
+                const option = document.createElement('option');
+                option.value = cls.id;
+                option.textContent = cls.name;
+                select.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error fetching classes:', error);
+            alert('Error loading classes');
+        }
+    }
+
+    async function loadActivePrompt() {
+        try {
+            const response = await fetch('/api/system-prompts/active/question_generation');
+            if (response.ok) {
+                const prompt = await response.json();
+                document.getElementById('activePromptDisplay').innerHTML = `
+                    <strong>Version ${prompt.version}</strong><br>
+                    <em>${prompt.description || 'No description'}</em><br>
+                    <div class="prompt-preview">${prompt.prompt_text.substring(0, 200)}...</div>
+                `;
+            } else {
+                document.getElementById('activePromptDisplay').innerHTML = `
+                    <span class="no-prompt">No active prompt found. <button onclick="createDefaultPrompt()" class="add-btn">Create Default</button></span>
+                `;
+            }
+        } catch (error) {
+            console.error('Error loading active prompt:', error);
+            document.getElementById('activePromptDisplay').innerHTML = 'Error loading prompt';
+        }
+    }
+
+    function switchTab(tabName) {
+        currentActiveTab = tabName;
+        
+        // Update tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+        
+        // Update tab content
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(`${tabName}Tab`).classList.add('active');
+    }
+
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            processImageFile(file);
+        }
+    }
+
+    function processImageFile(file) {
+        // Validate file size (5MB limit)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Image too large. Please use images under 5MB.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImageData = e.target.result.split(',')[1]; // Remove data:image/...;base64, prefix
+            displayImagePreview(e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function displayImagePreview(dataUrl) {
+        const preview = document.getElementById('imagePreview');
+        preview.innerHTML = `
+            <div class="image-preview-item" onmouseenter="showDeleteButton(this)" onmouseleave="hideDeleteButton(this)">
+                <img src="${dataUrl}" alt="Preview" class="preview-thumbnail" onclick="openImageModal('${dataUrl}')">
+                <div class="delete-overlay" onclick="removeImage()" style="display: none;">
+                    <span class="delete-icon">✕</span>
+                </div>
+                <p class="image-status">✓ Image ready for AI analysis</p>
+            </div>
+        `;
+        
+        // Hide paste area when image is loaded
+        document.getElementById('pasteArea').style.display = 'none';
+    }
+
+    function showDeleteButton(element) {
+        element.querySelector('.delete-overlay').style.display = 'flex';
+    }
+
+    function hideDeleteButton(element) {
+        element.querySelector('.delete-overlay').style.display = 'none';
+    }
+
+    function removeImage() {
+        uploadedImageData = null;
+        document.getElementById('imagePreview').innerHTML = '';
+        document.getElementById('imageUpload').value = '';
+        document.getElementById('pasteArea').style.display = 'block';
+    }
+
+    function openImageModal(dataUrl) {
+        const modal = document.createElement('div');
+        modal.className = 'image-modal';
+        modal.innerHTML = `
+            <div class="modal-backdrop" onclick="closeImageModal(this)">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <div class="modal-header">
+                        <h3>Image Preview</h3>
+                        <button class="modal-close" onclick="closeImageModal(this)">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="${dataUrl}" alt="Full size preview" class="modal-image">
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="removeImage(); closeImageModal(this);" class="delete-btn">Remove Image</button>
+                        <button onclick="closeImageModal(this)" class="add-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    function closeImageModal(element) {
+        const modal = element.closest('.image-modal');
+        document.body.removeChild(modal);
+    }
+
+    function focusPasteArea() {
+        document.getElementById('pasteArea').focus();
+    }
+
+    // Handle paste events for screenshots
+    function setupPasteHandling() {
+        const pasteArea = document.getElementById('pasteArea');
+        
+        // Make paste area focusable
+        pasteArea.setAttribute('tabindex', '0');
+        
+        // Handle paste events
+        pasteArea.addEventListener('paste', handlePaste);
+        document.addEventListener('paste', function(e) {
+            // Only handle paste if we're in the image tab and no input is focused
+            if (currentActiveTab === 'image' && !document.activeElement.matches('input, textarea')) {
+                handlePaste(e);
+            }
+        });
+        
+        // Visual feedback for paste area
+        pasteArea.addEventListener('focus', function() {
+            this.classList.add('paste-area-focused');
+        });
+        
+        pasteArea.addEventListener('blur', function() {
+            this.classList.remove('paste-area-focused');
+        });
+    }
+
+    function handlePaste(e) {
+        e.preventDefault();
+        
+        const items = e.clipboardData.items;
+        let imageFound = false;
+        
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            
+            if (item.type.indexOf('image') !== -1) {
+                imageFound = true;
+                const file = item.getAsFile();
+                
+                if (file) {
+                    processImageFile(file);
+                    break;
+                }
+            }
+        }
+        
+        if (!imageFound) {
+            // Show temporary message
+            const pasteArea = document.getElementById('pasteArea');
+            const originalHTML = pasteArea.innerHTML;
+            pasteArea.innerHTML = '<p style="color: #f44336;">⚠️ No image found in clipboard. Copy an image and try again.</p>';
+            
+            setTimeout(() => {
+                pasteArea.innerHTML = originalHTML;
+            }, 3000);
+        }
+    }
+
+    function editPrompt() {
+        document.getElementById('editPromptSection').style.display = 'block';
+        document.getElementById('promptHistorySection').style.display = 'none';
+        
+        // Load current prompt for editing
+        loadActivePromptForEdit();
+    }
+
+    async function loadActivePromptForEdit() {
+        try {
+            const response = await fetch('/api/system-prompts/active/question_generation');
+            if (response.ok) {
+                const prompt = await response.json();
+                document.getElementById('promptText').value = prompt.prompt_text;
+                document.getElementById('promptDescription').value = '';
+            }
+        } catch (error) {
+            console.error('Error loading prompt for edit:', error);
+        }
+    }
+
+    async function savePrompt() {
+        const promptText = document.getElementById('promptText').value;
+        const description = document.getElementById('promptDescription').value;
+        
+        if (!promptText.trim()) {
+            alert('Please enter a prompt text');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/system-prompts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: 'question_generation',
+                    prompt_text: promptText,
+                    description: description
+                })
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Prompt saved as version ${result.version}`);
+                cancelEditPrompt();
+                loadActivePrompt();
+            } else {
+                alert('Failed to save prompt');
+            }
+        } catch (error) {
+            console.error('Error saving prompt:', error);
+            alert('Error saving prompt');
+        }
+    }
+
+    function cancelEditPrompt() {
+        document.getElementById('editPromptSection').style.display = 'none';
+        document.getElementById('promptText').value = '';
+        document.getElementById('promptDescription').value = '';
+    }
+
+    async function viewPromptHistory() {
+        document.getElementById('promptHistorySection').style.display = 'block';
+        document.getElementById('editPromptSection').style.display = 'none';
+        
+        try {
+            const response = await fetch('/api/system-prompts?name=question_generation');
+            const prompts = await response.json();
+            
+            const historyList = document.getElementById('promptHistoryList');
+            historyList.innerHTML = '';
+            
+            prompts.forEach(prompt => {
+                const promptDiv = document.createElement('div');
+                promptDiv.classList.add('prompt-history-item');
+                promptDiv.innerHTML = `
+                    <div class="prompt-header">
+                        <strong>Version ${prompt.version}</strong> 
+                        ${prompt.is_active ? '<span class="active-badge">ACTIVE</span>' : ''}
+                        <span class="prompt-date">${new Date(prompt.created_at).toLocaleDateString()}</span>
+                    </div>
+                    <div class="prompt-description">${prompt.description || 'No description'}</div>
+                    <div class="prompt-preview">${prompt.prompt_text.substring(0, 150)}...</div>
+                    <div class="prompt-actions">
+                        ${!prompt.is_active ? `<button onclick="activatePromptVersion(${prompt.id})" class="add-btn">Activate</button>` : ''}
+                        ${!prompt.is_active ? `<button onclick="deletePromptVersion(${prompt.id})" class="delete-btn">Delete</button>` : ''}
+                    </div>
+                `;
+                historyList.appendChild(promptDiv);
+            });
+        } catch (error) {
+            console.error('Error loading prompt history:', error);
+            alert('Error loading prompt history');
+        }
+    }
+
+    function closePromptHistory() {
+        document.getElementById('promptHistorySection').style.display = 'none';
+    }
+
+    async function activatePromptVersion(promptId) {
+        try {
+            const response = await fetch(`/api/system-prompts/${promptId}/activate`, {
+                method: 'POST'
+            });
+            
+            if (response.ok) {
+                alert('Prompt version activated successfully');
+                loadActivePrompt();
+                viewPromptHistory(); // Refresh history
+            } else {
+                alert('Failed to activate prompt version');
+            }
+        } catch (error) {
+            console.error('Error activating prompt:', error);
+            alert('Error activating prompt');
+        }
+    }
+
+    async function deletePromptVersion(promptId) {
+        if (!confirm('Are you sure you want to delete this prompt version?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/system-prompts/${promptId}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                alert('Prompt version deleted successfully');
+                viewPromptHistory(); // Refresh history
+            } else {
+                alert('Failed to delete prompt version');
+            }
+        } catch (error) {
+            console.error('Error deleting prompt:', error);
+            alert('Error deleting prompt');
+        }
+    }
+
+    async function createDefaultPrompt() {
+        const defaultPrompt = `You are an expert educational content creator specializing in generating high-quality quiz questions. Your task is to create quiz questions from provided text content or images.
+
+**Output Format**: Return a JSON array of question objects with this exact structure:
+[
+  {
+    "question": "Clear, concise question text",
+    "question_type": "multiple_choice|fill_blank",
+    "options": ["option1", "option2", "option3", "option4"],
+    "correct_answer": "exact text matching one of the options",
+    "acceptable_answers": ["answer1", "answer2"],
+    "difficulty": "easy|medium|hard",
+    "tags": ["tag1", "tag2"],
+    "explanation": "Brief explanation of why this is the correct answer"
+  }
+]
+
+**Question Generation Rules**:
+1. **Question Types**:
+   - multiple_choice: Generate the specified minimum number of options (default 4), 1 correct
+   - fill_blank: Use _____ for blanks, provide multiple acceptable answers in "acceptable_answers"
+
+2. **Quality Standards**:
+   - Questions must be clear, unambiguous, and directly related to the content
+   - Incorrect options (distractors) should be plausible but clearly wrong
+   - Test understanding, not just memorization
+   - Use varied question stems (What, How, Why, When, etc.)
+
+3. **Fill-in-the-Blank Handling**:
+   - Use _____ to mark blanks in questions
+   - Provide case-insensitive acceptable answers
+   - Include common variations (singular/plural, abbreviations)
+   - Support multiple blanks per question when appropriate
+
+4. **Difficulty Assessment**:
+   - easy: Basic recall and recognition
+   - medium: Application and analysis  
+   - hard: Synthesis and evaluation
+
+Only return the JSON array, no additional text.`;
+
+        try {
+            const response = await fetch('/api/system-prompts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: 'question_generation',
+                    prompt_text: defaultPrompt,
+                    description: 'Default system prompt for question generation'
+                })
+            });
+            
+            if (response.ok) {
+                alert('Default prompt created successfully');
+                loadActivePrompt();
+            } else {
+                alert('Failed to create default prompt');
+            }
+        } catch (error) {
+            console.error('Error creating default prompt:', error);
+            alert('Error creating default prompt');
+        }
+    }
+
+    async function generateQuestions() {
+        const classId = document.getElementById('generationClass').value;
+        const numQuestions = document.getElementById('numQuestions').value;
+        const minOptions = document.getElementById('minOptions').value;
+        const difficulty = document.getElementById('difficultyPreference').value;
+        const customInstructions = document.getElementById('customInstructions').value;
+        
+        // Get selected question types
+        const questionTypes = [];
+        document.querySelectorAll('input[name="questionTypes"]:checked').forEach(checkbox => {
+            questionTypes.push(checkbox.value);
+        });
+        
+        if (!classId) {
+            alert('Please select a class');
+            return;
+        }
+        
+        if (questionTypes.length === 0) {
+            alert('Please select at least one question type');
+            return;
+        }
+        
+        let textContent = '';
+        let imageData = '';
+        
+        if (currentActiveTab === 'text') {
+            textContent = document.getElementById('textContent').value;
+            if (!textContent.trim()) {
+                alert('Please enter some text content');
+                return;
+            }
+        } else {
+            if (!uploadedImageData) {
+                alert('Please upload an image');
+                return;
+            }
+            imageData = uploadedImageData;
+        }
+        
+        // Show loading indicator
+        document.getElementById('loadingIndicator').style.display = 'block';
+        document.getElementById('generatedQuestionsSection').style.display = 'none';
+        
+        try {
+            const response = await fetch('/api/ai/generate-questions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text_content: textContent,
+                    image_data: imageData,
+                    class_id: parseInt(classId),
+                    num_questions: parseInt(numQuestions),
+                    min_options: parseInt(minOptions),
+                    question_types: questionTypes,
+                    difficulty_preference: difficulty,
+                    custom_instructions: customInstructions
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                const cumulativeMode = document.getElementById('cumulativeMode').checked;
+                
+                if (cumulativeMode) {
+                    // Add unique IDs to new questions
+                    result.generated_questions.forEach(q => {
+                        q.id = questionIdCounter++;
+                        q.selected = false;
+                        q.classId = parseInt(classId);
+                        q.className = document.getElementById('generationClass').selectedOptions[0].text;
+                    });
+                    generatedQuestions = generatedQuestions.concat(result.generated_questions);
+                } else {
+                    // Replace existing questions
+                    selectedQuestions.clear();
+                    result.generated_questions.forEach(q => {
+                        q.id = questionIdCounter++;
+                        q.selected = false;
+                        q.classId = parseInt(classId);
+                        q.className = document.getElementById('generationClass').selectedOptions[0].text;
+                    });
+                    generatedQuestions = result.generated_questions;
+                }
+                
+                displayGeneratedQuestions({
+                    ...result,
+                    generated_questions: generatedQuestions,
+                    total_generated: generatedQuestions.length
+                });
+            } else {
+                alert(`Failed to generate questions: ${result.detail}`);
+            }
+        } catch (error) {
+            console.error('Error generating questions:', error);
+            alert('Error generating questions');
+        } finally {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+    }
+
+    function displayGeneratedQuestions(result) {
+        const section = document.getElementById('generatedQuestionsSection');
+        const infoDiv = document.getElementById('generationInfo');
+        const listDiv = document.getElementById('generatedQuestionsList');
+        
+        // Show class association info
+        const uniqueClasses = [...new Set(generatedQuestions.map(q => `${q.className} (ID: ${q.classId})`))];
+        
+        infoDiv.innerHTML = `
+            <div class="info-row">
+                <div class="info-item">
+                    <strong>Total Questions:</strong> ${result.total_generated}
+                    <small>Selected: ${selectedQuestions.size}</small>
+                </div>
+                <div class="info-item">
+                    <strong>Target Classes:</strong> ${uniqueClasses.join(', ')}
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <strong>AI Model:</strong> ${result.ai_model_used || 'gpt-4o'}
+                </div>
+                <div class="info-item">
+                    <strong>Prompt Version:</strong> ${result.prompt_version || 'current'}
+                </div>
+            </div>
+        `;
+        
+        listDiv.innerHTML = '';
+        
+        generatedQuestions.forEach((question, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('generated-question-item');
+            if (question.selected) {
+                questionDiv.classList.add('selected');
+            }
+            
+            let optionsDisplay = '';
+            if (question.question_type === 'fill_blank') {
+                optionsDisplay = `<strong>Acceptable Answers:</strong> ${question.acceptable_answers ? question.acceptable_answers.join(', ') : question.correct_answer}`;
+                // Show blank count if multiple blanks exist
+                const blankCount = (question.question || '').split('{blank}').length - 1;
+                if (blankCount > 1) {
+                    optionsDisplay += `<br><strong>Blanks:</strong> ${blankCount} blanks to fill`;
+                }
+            } else {
+                optionsDisplay = `<strong>Options:</strong> ${question.options.join(' | ')}<br><strong>Correct:</strong> ${question.correct_answer}`;
+            }
+            
+            questionDiv.innerHTML = `
+                <div class="question-header">
+                    <div class="question-title">
+                        <label class="question-checkbox">
+                            <input type="checkbox" ${question.selected ? 'checked' : ''} onchange="toggleQuestionSelection(${question.id})">
+                            <span>Question ${index + 1}</span>
+                        </label>
+                        <span class="question-class">→ ${question.className}</span>
+                    </div>
+                    <div class="question-badges">
+                        <span class="question-type-badge">${question.question_type.replace('_', ' ')}</span>
+                        <span class="difficulty-badge">${question.difficulty}</span>
+                    </div>
+                </div>
+                
+                <div class="question-content-editable">
+                    <label>Question:</label>
+                    <textarea class="edit-question" onchange="updateQuestion(${question.id}, 'question', this.value)">${question.question}</textarea>
+                    ${question.question_type === 'fill_blank' ? `
+                        <div class="question-preview">
+                            <label>Preview:</label>
+                            <div class="blank-preview">${renderBlankPreview(question.question)}</div>
+                        </div>
+                    ` : ''}
+                </div>
+                
+                <div class="question-options-editable">
+                    ${question.question_type === 'fill_blank' ? 
+                        generateFillBlankEditor(question) : 
+                        generateMultipleChoiceEditor(question)
+                    }
+                </div>
+                
+                ${question.explanation ? `
+                    <div class="question-explanation-editable">
+                        <label>Explanation:</label>
+                        <textarea class="edit-explanation" onchange="updateQuestion(${question.id}, 'explanation', this.value)">${question.explanation}</textarea>
+                    </div>
+                ` : ''}
+                
+                <div class="question-actions">
+                    <button onclick="addSingleToBank(${question.id})" class="add-btn">Add to Bank</button>
+                    <button onclick="duplicateQuestion(${question.id})" class="add-btn">Duplicate</button>
+                    <button onclick="removeGenerated(${question.id})" class="delete-btn">Remove</button>
+                </div>
+            `;
+            
+            listDiv.appendChild(questionDiv);
+        });
+        
+        updateBulkActionButtons();
+        section.style.display = 'block';
+    }
+
+    function generateFillBlankEditor(question) {
+        return `
+            <label>Acceptable Answers (one per line):</label>
+            <textarea class="edit-answers" onchange="updateFillBlankAnswers(${question.id}, this.value)">${(question.acceptable_answers || [question.correct_answer]).join('\n')}</textarea>
+            <small class="input-help">Note: Answers will be normalized to lowercase for consistency</small>
+        `;
+    }
+
+    function generateMultipleChoiceEditor(question) {
+        return question.options.map((option, index) => `
+            <div class="option-editor">
+                <input type="text" value="${option}" onchange="updateOption(${question.id}, ${index}, this.value)" class="edit-option">
+                <label class="correct-option">
+                    <input type="radio" name="correct_${question.id}" ${option === question.correct_answer ? 'checked' : ''} onchange="updateCorrectAnswer(${question.id}, '${option}')">
+                    Correct
+                </label>
+                <button onclick="removeOption(${question.id}, ${index})" class="delete-btn small">×</button>
+            </div>
+        `).join('') + `<button onclick="addOption(${question.id})" class="add-btn small">Add Option</button>`;
+    }
+
+    // Question editing functions
+    function updateQuestion(questionId, field, value) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        if (question) {
+            question[field] = value;
+        }
+    }
+
+    function updateOption(questionId, optionIndex, value) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        if (question) {
+            question.options[optionIndex] = value;
+            // Update correct answer if it was this option
+            if (question.correct_answer === question.options[optionIndex]) {
+                question.correct_answer = value;
+            }
+        }
+    }
+
+    function updateCorrectAnswer(questionId, value) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        if (question) {
+            question.correct_answer = value;
+        }
+    }
+
+    function updateFillBlankAnswers(questionId, value) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        if (question) {
+            const answers = value.split('\n').filter(a => a.trim());
+            question.acceptable_answers = answers;
+            question.correct_answer = answers[0] || '';
+            question.options = answers;
+        }
+    }
+
+    function addOption(questionId) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        if (question && question.options.length < 8) {
+            question.options.push('New option');
+            displayGeneratedQuestions({
+                generated_questions: generatedQuestions,
+                total_generated: generatedQuestions.length,
+                ai_model_used: 'gpt-4o',
+                prompt_version: 'current'
+            });
+        }
+    }
+
+    function removeOption(questionId, optionIndex) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        if (question && question.options.length > 2) {
+            const removedOption = question.options[optionIndex];
+            question.options.splice(optionIndex, 1);
+            
+            // If we removed the correct answer, set to first option
+            if (question.correct_answer === removedOption) {
+                question.correct_answer = question.options[0];
+            }
+            
+            displayGeneratedQuestions({
+                generated_questions: generatedQuestions,
+                total_generated: generatedQuestions.length,
+                ai_model_used: 'gpt-4o',
+                prompt_version: 'current'
+            });
+        }
+    }
+
+    function duplicateQuestion(questionId) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        if (question) {
+            const duplicate = {
+                ...question,
+                id: questionIdCounter++,
+                question: question.question + ' (Copy)',
+                selected: false
+            };
+            generatedQuestions.push(duplicate);
+            displayGeneratedQuestions({
+                generated_questions: generatedQuestions,
+                total_generated: generatedQuestions.length,
+                ai_model_used: 'gpt-4o',
+                prompt_version: 'current'
+            });
+        }
+    }
+
+    // Selection functions
+    function toggleQuestionSelection(questionId) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        if (question) {
+            question.selected = !question.selected;
+            if (question.selected) {
+                selectedQuestions.add(questionId);
+            } else {
+                selectedQuestions.delete(questionId);
+            }
+            updateBulkActionButtons();
+        }
+    }
+
+    function selectAllQuestions() {
+        generatedQuestions.forEach(q => {
+            q.selected = true;
+            selectedQuestions.add(q.id);
+        });
+        displayGeneratedQuestions({
+            generated_questions: generatedQuestions,
+            total_generated: generatedQuestions.length,
+            ai_model_used: 'gpt-4o',
+            prompt_version: 'current'
+        });
+    }
+
+    function clearSelected() {
+        generatedQuestions.forEach(q => q.selected = false);
+        selectedQuestions.clear();
+        displayGeneratedQuestions({
+            generated_questions: generatedQuestions,
+            total_generated: generatedQuestions.length,
+            ai_model_used: 'gpt-4o',
+            prompt_version: 'current'
+        });
+    }
+
+    function updateBulkActionButtons() {
+        const hasSelected = selectedQuestions.size > 0;
+        document.getElementById('addSelectedBtn').style.display = hasSelected ? 'inline-block' : 'none';
+        document.getElementById('addAllBtn').textContent = hasSelected ? 
+            `Add All (${generatedQuestions.length})` : 
+            'Add All to Question Bank';
+    }
+
+    async function addSingleToBank(questionId) {
+        const question = generatedQuestions.find(q => q.id === questionId);
+        
+        if (!question) return;
+        
+        try {
+            const response = await fetch('/api/ai/add-to-bank', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    questions: [question],
+                    class_id: question.classId
+                })
+            });
+            
+            if (response.ok) {
+                alert('Question added to bank successfully!');
+                // Mark question as added
+                question.addedToBank = true;
+                displayGeneratedQuestions({
+                    generated_questions: generatedQuestions,
+                    total_generated: generatedQuestions.length,
+                    ai_model_used: 'gpt-4o',
+                    prompt_version: 'current'
+                });
+            } else {
+                alert('Failed to add question to bank');
+            }
+        } catch (error) {
+            console.error('Error adding question to bank:', error);
+            alert('Error adding question to bank');
+        }
+    }
+
+    async function addSelectedToBank() {
+        const selectedQuestionsArray = generatedQuestions.filter(q => q.selected);
+        
+        if (selectedQuestionsArray.length === 0) {
+            alert('No questions selected');
+            return;
+        }
+        
+        // Group questions by class
+        const questionsByClass = {};
+        selectedQuestionsArray.forEach(q => {
+            if (!questionsByClass[q.classId]) {
+                questionsByClass[q.classId] = [];
+            }
+            questionsByClass[q.classId].push(q);
+        });
+        
+        try {
+            let totalAdded = 0;
+            
+            for (const [classId, questions] of Object.entries(questionsByClass)) {
+                const response = await fetch('/api/ai/add-to-bank', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        questions: questions,
+                        class_id: parseInt(classId)
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    totalAdded += result.questions_added;
+                    
+                    // Mark questions as added
+                    questions.forEach(q => q.addedToBank = true);
+                }
+            }
+            
+            alert(`Successfully added ${totalAdded} selected questions to the question bank!`);
+            clearSelected();
+            displayGeneratedQuestions({
+                generated_questions: generatedQuestions,
+                total_generated: generatedQuestions.length,
+                ai_model_used: 'gpt-4o',
+                prompt_version: 'current'
+            });
+            
+        } catch (error) {
+            console.error('Error adding questions to bank:', error);
+            alert('Error adding questions to bank');
+        }
+    }
+
+    async function addAllToBank() {
+        if (generatedQuestions.length === 0) {
+            alert('No questions to add');
+            return;
+        }
+        
+        // Group questions by class
+        const questionsByClass = {};
+        generatedQuestions.forEach(q => {
+            if (!questionsByClass[q.classId]) {
+                questionsByClass[q.classId] = [];
+            }
+            questionsByClass[q.classId].push(q);
+        });
+        
+        try {
+            let totalAdded = 0;
+            
+            for (const [classId, questions] of Object.entries(questionsByClass)) {
+                const response = await fetch('/api/ai/add-to-bank', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        questions: questions,
+                        class_id: parseInt(classId)
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    totalAdded += result.questions_added;
+                }
+            }
+            
+            alert(`Successfully added ${totalAdded} questions to the question bank!`);
+            clearGenerated();
+            
+        } catch (error) {
+            console.error('Error adding questions to bank:', error);
+            alert('Error adding questions to bank');
+        }
+    }
+
+    function removeGenerated(questionId) {
+        const index = generatedQuestions.findIndex(q => q.id === questionId);
+        if (index !== -1) {
+            generatedQuestions.splice(index, 1);
+            selectedQuestions.delete(questionId);
+            displayGeneratedQuestions({
+                generated_questions: generatedQuestions,
+                total_generated: generatedQuestions.length,
+                ai_model_used: 'gpt-4o',
+                prompt_version: 'current'
+            });
+        }
+    }
+
+    function clearGenerated() {
+        generatedQuestions = [];
+        document.getElementById('generatedQuestionsSection').style.display = 'none';
+        document.getElementById('textContent').value = '';
+        removeImage(); // This will clear image and show paste area
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+        checkAIAvailability();
+        fetchClasses();
+        loadActivePrompt();
+        setupPasteHandling();
+    });
+
+    async function checkAIAvailability() {
+        try {
+            const response = await fetch('/api/ai/status');
+            const status = await response.json();
+            
+            if (!status.ai_available) {
+                showAIUnavailableMessage(status);
+                disableAIFeatures();
+            }
+        } catch (error) {
+            console.error('Error checking AI availability:', error);
+            showAIUnavailableMessage({
+                ai_available: false,
+                openai_status: { error: 'Could not connect to AI service' }
+            });
+            disableAIFeatures();
+        }
+    }
+
+    function showAIUnavailableMessage(status) {
+        const container = document.querySelector('.container');
+        const warningDiv = document.createElement('div');
+        warningDiv.classList.add('ai-unavailable-warning');
+        warningDiv.innerHTML = `
+            <div class="warning-card">
+                <div class="warning-header">
+                    <span class="warning-icon">⚠️</span>
+                    <h3>AI Features Not Available</h3>
+                </div>
+                <div class="warning-content">
+                    <p><strong>Issue:</strong> ${status.openai_status.error}</p>
+                    <div class="warning-actions">
+                        <a href="/ai_config" class="add-btn">Configure AI Settings</a>
+                        <button onclick="checkAIAvailability()" class="add-btn">Retry</button>
+                    </div>
+                    <div class="warning-help">
+                        <h4>To enable AI features:</h4>
+                        <ol>
+                            <li>Get an OpenAI API key from <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI Platform</a></li>
+                            <li>Set the OPENAI_API_KEY environment variable</li>
+                            <li>Restart the server</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Insert warning after the title
+        container.insertBefore(warningDiv, container.children[1]);
+    }
+
+    function disableAIFeatures() {
+        // Disable the generate button
+        const generateBtn = document.querySelector('[onclick="generateQuestions()"]');
+        if (generateBtn) {
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'AI Features Disabled';
+            generateBtn.style.opacity = '0.5';
+            generateBtn.style.cursor = 'not-allowed';
+        }
+        
+        // Disable form inputs
+        const inputs = document.querySelectorAll('#textContent, #imageUpload, #generationClass, #numQuestions, #minOptions, input[name="questionTypes"], #difficultyPreference, #customInstructions');
+        inputs.forEach(input => {
+            input.disabled = true;
+            input.style.opacity = '0.5';
+        });
+        
+        // Add overlay to generation sections
+        const sections = document.querySelectorAll('.ai-generation-container, .prompt-management-container');
+        sections.forEach(section => {
+            section.style.position = 'relative';
+            section.style.pointerEvents = 'none';
+            section.style.opacity = '0.6';
+        });
+    }
+
+    // Helper function to render {blank} tokens as input fields for preview
+    function renderBlankPreview(questionText) {
+        if (!questionText) return '';
+        
+        // Replace {blank} tokens with styled input fields
+        return questionText.replace(/{blank}/g, '<input type="text" class="blank-input" placeholder="___" readonly>');
+    }
+</script>
+
+<style>
+.ai-unavailable-warning {
+    margin: 1rem 0 2rem 0;
+}
+
+.warning-card {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.warning-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.warning-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.warning-header h3 {
+    margin: 0;
+    color: #856404;
+}
+
+.warning-content p {
+    margin: 0 0 1rem 0;
+    color: #856404;
+}
+
+.warning-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.warning-help {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.warning-help h4 {
+    margin: 0 0 0.5rem 0;
+    color: #856404;
+}
+
+.warning-help ol {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: #856404;
+}
+
+.warning-help a {
+    color: #0066cc;
+    text-decoration: underline;
+}
+</style>
+</body>
+</html>

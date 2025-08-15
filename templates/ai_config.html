@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
+    <title>AI Configuration</title>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/class_management" class="nav-link">Manage Classes</a>
+    <a href="/question_bank" class="nav-link">Question Bank</a>
+    <a href="/quiz_builder" class="nav-link">Create Quiz</a>
+    <a href="/ai_generator" class="nav-link">AI Generator</a>
+</nav>
+
+<div class="container">
+    <h1>AI Configuration</h1>
+    
+    <!-- AI Status Section -->
+    <div class="ai-status-container">
+        <h2>AI System Status</h2>
+        <div id="aiStatusDisplay" class="status-display">
+            <div class="loading">Loading AI status...</div>
+        </div>
+        <button onclick="refreshStatus()" class="add-btn">Refresh Status</button>
+    </div>
+
+    <!-- Configuration Settings Section -->
+    <div class="config-container">
+        <h2>Configuration Settings</h2>
+        
+        <div class="config-actions">
+            <button onclick="showAddConfigForm()" class="add-btn">Add New Configuration</button>
+            <button onclick="loadConfigurations()" class="add-btn">Refresh Configurations</button>
+        </div>
+        
+        <!-- Add/Edit Configuration Form -->
+        <div id="configForm" class="config-form" style="display: none;">
+            <h3 id="formTitle">Add New Configuration</h3>
+            <form onsubmit="saveConfiguration(event)">
+                <div class="form-group">
+                    <label for="configKey">Configuration Key:</label>
+                    <input type="text" id="configKey" required placeholder="e.g., default_model">
+                </div>
+                
+                <div class="form-group">
+                    <label for="configType">Value Type:</label>
+                    <select id="configType" onchange="handleTypeChange()" required>
+                        <option value="string">String</option>
+                        <option value="integer">Integer</option>
+                        <option value="float">Float</option>
+                        <option value="boolean">Boolean</option>
+                        <option value="json">JSON</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="configValue">Configuration Value:</label>
+                    <input type="text" id="configValue" required placeholder="Configuration value">
+                    <div id="booleanButtons" class="boolean-buttons" style="display: none;">
+                        <button type="button" onclick="setBooleanValue('true')" class="bool-btn">True</button>
+                        <button type="button" onclick="setBooleanValue('false')" class="bool-btn">False</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="configDescription">Description:</label>
+                    <textarea id="configDescription" placeholder="Brief description of this configuration setting"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="add-btn" id="saveButton">Save Configuration</button>
+                    <button type="button" onclick="cancelConfigForm()" class="delete-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Configurations List -->
+        <div id="configurationsList" class="configurations-list">
+            <div class="loading">Loading configurations...</div>
+        </div>
+    </div>
+
+    <!-- Predefined Configuration Templates -->
+    <div class="templates-container">
+        <h2>Quick Configuration Templates</h2>
+        <div class="templates-grid">
+            <div class="template-card">
+                <h4>GPT-5 Setup</h4>
+                <p>Configure for GPT-5 with optimal settings</p>
+                <button onclick="applyTemplate('gpt5')" class="add-btn">Apply Template</button>
+            </div>
+            <div class="template-card">
+                <h4>GPT-5 Mini Setup</h4>
+                <p>Configure for GPT-5 Mini with efficient performance</p>
+                <button onclick="applyTemplate('gpt5mini')" class="add-btn">Apply Template</button>
+            </div>
+            <div class="template-card">
+                <h4>Conservative Setup</h4>
+                <p>Lower temperature, more consistent outputs</p>
+                <button onclick="applyTemplate('conservative')" class="add-btn">Apply Template</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading indicator -->
+<div id="loadingIndicator" class="loading-indicator" style="display: none;">
+    <div class="spinner"></div>
+    <p>Processing configuration changes...</p>
+</div>
+
+<script>
+    let configurations = [];
+    let editingConfig = null;
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+        loadAIStatus();
+        loadConfigurations();
+    });
+
+    async function loadAIStatus() {
+        try {
+            const response = await fetch('/api/ai/status');
+            const status = await response.json();
+            
+            displayAIStatus(status);
+        } catch (error) {
+            console.error('Error loading AI status:', error);
+            document.getElementById('aiStatusDisplay').innerHTML = `
+                <div class="status-error">
+                    <span class="status-icon">❌</span>
+                    <div class="status-details">
+                        <strong>Error loading AI status</strong>
+                        <p>Could not connect to AI service</p>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    function displayAIStatus(status) {
+        const statusDisplay = document.getElementById('aiStatusDisplay');
+        
+        const overallStatus = status.ai_available ? 'operational' : 'disabled';
+        const statusIcon = status.ai_available ? '✅' : '❌';
+        const statusText = status.ai_available ? 'AI Features Available' : 'AI Features Disabled';
+        
+        let openaiDetails = '';
+        if (status.openai_status.available) {
+            openaiDetails = '<span class="status-success">✅ OpenAI API Key Configured</span>';
+        } else {
+            openaiDetails = `<span class="status-error">❌ ${status.openai_status.error}</span>`;
+        }
+        
+        statusDisplay.innerHTML = `
+            <div class="status-card ${overallStatus}">
+                <div class="status-header">
+                    <span class="status-icon">${statusIcon}</span>
+                    <div class="status-info">
+                        <h3>${statusText}</h3>
+                        <p>Current system status and capabilities</p>
+                    </div>
+                </div>
+                
+                <div class="status-details">
+                    <div class="status-section">
+                        <h4>API Status</h4>
+                        <div class="status-items">
+                            ${openaiDetails}
+                        </div>
+                    </div>
+                    
+                    <div class="status-section">
+                        <h4>Available Features</h4>
+                        <div class="status-items">
+                            <span class="feature-status ${status.features.question_generation ? 'enabled' : 'disabled'}">
+                                ${status.features.question_generation ? '✅' : '❌'} Question Generation
+                            </span>
+                            <span class="feature-status ${status.features.image_analysis ? 'enabled' : 'disabled'}">
+                                ${status.features.image_analysis ? '✅' : '❌'} Image Analysis
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                ${!status.ai_available ? `
+                    <div class="status-help">
+                        <h4>To Enable AI Features:</h4>
+                        <ol>
+                            <li>Get an OpenAI API key from <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI Platform</a></li>
+                            <li>Set the OPENAI_API_KEY environment variable</li>
+                            <li>Restart the server</li>
+                        </ol>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    async function refreshStatus() {
+        await loadAIStatus();
+    }
+
+    async function loadConfigurations() {
+        try {
+            const response = await fetch('/api/ai/config');
+            configurations = await response.json();
+            
+            displayConfigurations();
+        } catch (error) {
+            console.error('Error loading configurations:', error);
+            document.getElementById('configurationsList').innerHTML = `
+                <div class="error-message">
+                    <p>Error loading configurations. Please try again.</p>
+                </div>
+            `;
+        }
+    }
+
+    function displayConfigurations() {
+        const listDiv = document.getElementById('configurationsList');
+        
+        if (configurations.length === 0) {
+            listDiv.innerHTML = `
+                <div class="empty-state">
+                    <p>No configurations found. Add some to get started.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        listDiv.innerHTML = '';
+        
+        configurations.forEach(config => {
+            const configDiv = document.createElement('div');
+            configDiv.classList.add('config-item');
+            
+            let displayValue = config.config_value;
+            if (config.config_type === 'boolean') {
+                displayValue = config.config_value === 'true' ? '✅ True' : '❌ False';
+            } else if (config.config_value.length > 50) {
+                displayValue = config.config_value.substring(0, 50) + '...';
+            }
+            
+            configDiv.innerHTML = `
+                <div class="config-header">
+                    <div class="config-info">
+                        <h4>${config.config_key}</h4>
+                        <span class="config-type">${config.config_type}</span>
+                    </div>
+                    <div class="config-actions">
+                        <button onclick="editConfiguration('${config.config_key}')" class="add-btn small">Edit</button>
+                        <button onclick="deleteConfiguration('${config.config_key}')" class="delete-btn small">Delete</button>
+                    </div>
+                </div>
+                <div class="config-content">
+                    <div class="config-value">
+                        <strong>Value:</strong> ${displayValue}
+                    </div>
+                    <div class="config-description">
+                        <strong>Description:</strong> ${config.description || 'No description'}
+                    </div>
+                    <div class="config-metadata">
+                        <small>Last updated: ${new Date(config.updated_at).toLocaleString()} by ${config.updated_by}</small>
+                    </div>
+                </div>
+            `;
+            
+            listDiv.appendChild(configDiv);
+        });
+    }
+
+    function showAddConfigForm() {
+        editingConfig = null;
+        document.getElementById('formTitle').textContent = 'Add New Configuration';
+        document.getElementById('saveButton').textContent = 'Save Configuration';
+        
+        // Clear form
+        document.getElementById('configKey').value = '';
+        document.getElementById('configKey').disabled = false;
+        document.getElementById('configType').value = 'string';
+        document.getElementById('configValue').value = '';
+        document.getElementById('configDescription').value = '';
+        
+        handleTypeChange();
+        document.getElementById('configForm').style.display = 'block';
+    }
+
+    async function editConfiguration(configKey) {
+        try {
+            const response = await fetch(`/api/ai/config/${configKey}`);
+            const config = await response.json();
+            
+            editingConfig = configKey;
+            document.getElementById('formTitle').textContent = 'Edit Configuration';
+            document.getElementById('saveButton').textContent = 'Update Configuration';
+            
+            // Fill form
+            document.getElementById('configKey').value = config.config_key;
+            document.getElementById('configKey').disabled = true;
+            document.getElementById('configType').value = config.config_type;
+            document.getElementById('configValue').value = config.raw_value;
+            document.getElementById('configDescription').value = config.description || '';
+            
+            handleTypeChange();
+            document.getElementById('configForm').style.display = 'block';
+        } catch (error) {
+            console.error('Error loading configuration for edit:', error);
+            alert('Error loading configuration for editing');
+        }
+    }
+
+    async function deleteConfiguration(configKey) {
+        if (!confirm(`Are you sure you want to delete the configuration '${configKey}'?`)) {
+            return;
+        }
+        
+        try {
+            document.getElementById('loadingIndicator').style.display = 'block';
+            
+            const response = await fetch(`/api/ai/config/${configKey}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                alert('Configuration deleted successfully');
+                loadConfigurations();
+            } else {
+                const error = await response.json();
+                alert(`Failed to delete configuration: ${error.detail}`);
+            }
+        } catch (error) {
+            console.error('Error deleting configuration:', error);
+            alert('Error deleting configuration');
+        } finally {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+    }
+
+    function handleTypeChange() {
+        const type = document.getElementById('configType').value;
+        const valueInput = document.getElementById('configValue');
+        const booleanButtons = document.getElementById('booleanButtons');
+        
+        if (type === 'boolean') {
+            valueInput.style.display = 'none';
+            booleanButtons.style.display = 'block';
+        } else {
+            valueInput.style.display = 'block';
+            booleanButtons.style.display = 'none';
+            
+            // Set appropriate input attributes
+            if (type === 'integer') {
+                valueInput.type = 'number';
+                valueInput.step = '1';
+                valueInput.placeholder = 'Enter an integer value';
+            } else if (type === 'float') {
+                valueInput.type = 'number';
+                valueInput.step = 'any';
+                valueInput.placeholder = 'Enter a decimal value';
+            } else {
+                valueInput.type = 'text';
+                valueInput.step = '';
+                if (type === 'json') {
+                    valueInput.placeholder = 'Enter valid JSON';
+                } else {
+                    valueInput.placeholder = 'Enter configuration value';
+                }
+            }
+        }
+    }
+
+    function setBooleanValue(value) {
+        document.getElementById('configValue').value = value;
+        
+        // Update button styles
+        const buttons = document.querySelectorAll('.bool-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    async function saveConfiguration(event) {
+        event.preventDefault();
+        
+        const configKey = document.getElementById('configKey').value;
+        const configType = document.getElementById('configType').value;
+        const configValue = document.getElementById('configValue').value;
+        const configDescription = document.getElementById('configDescription').value;
+        
+        if (!configKey.trim() || !configValue.trim()) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Validate JSON if type is json
+        if (configType === 'json') {
+            try {
+                JSON.parse(configValue);
+            } catch (e) {
+                alert('Invalid JSON format. Please check your input.');
+                return;
+            }
+        }
+        
+        try {
+            document.getElementById('loadingIndicator').style.display = 'block';
+            
+            const url = editingConfig ? `/api/ai/config/${configKey}` : '/api/ai/config';
+            const method = editingConfig ? 'PUT' : 'POST';
+            
+            const response = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    config_key: configKey,
+                    config_value: configValue,
+                    config_type: configType,
+                    description: configDescription
+                })
+            });
+            
+            if (response.ok) {
+                alert(`Configuration ${editingConfig ? 'updated' : 'created'} successfully`);
+                cancelConfigForm();
+                loadConfigurations();
+            } else {
+                const error = await response.json();
+                alert(`Failed to save configuration: ${error.detail}`);
+            }
+        } catch (error) {
+            console.error('Error saving configuration:', error);
+            alert('Error saving configuration');
+        } finally {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+    }
+
+    function cancelConfigForm() {
+        document.getElementById('configForm').style.display = 'none';
+        editingConfig = null;
+    }
+
+    async function applyTemplate(templateName) {
+        const templates = {
+            gpt5: [
+                { key: 'default_model', value: 'gpt-5', type: 'string', desc: 'Latest GPT-5 model' },
+                { key: 'default_temperature', value: '0.7', type: 'float', desc: 'Balanced creativity' },
+                { key: 'max_questions_per_request', value: '15', type: 'integer', desc: 'Optimal batch size for GPT-5' }
+            ],
+            gpt5mini: [
+                { key: 'default_model', value: 'gpt-5-mini', type: 'string', desc: 'GPT-5 Mini model' },
+                { key: 'default_temperature', value: '0.6', type: 'float', desc: 'Slightly conservative' },
+                { key: 'max_questions_per_request', value: '12', type: 'integer', desc: 'Good balance for GPT-5 Mini' }
+            ],
+            conservative: [
+                { key: 'default_temperature', value: '0.3', type: 'float', desc: 'Low temperature for consistency' },
+                { key: 'max_questions_per_request', value: '8', type: 'integer', desc: 'Smaller batches for quality' }
+            ]
+        };
+        
+        const template = templates[templateName];
+        if (!template) {
+            alert('Template not found');
+            return;
+        }
+        
+        const templateDisplayNames = {
+            gpt5: 'GPT-5',
+            gpt5mini: 'GPT-5 Mini',
+            conservative: 'Conservative'
+        };
+        
+        const displayName = templateDisplayNames[templateName] || templateName;
+        
+        if (!confirm(`Apply ${displayName} template? This will update ${template.length} configuration(s).`)) {
+            return;
+        }
+        
+        try {
+            document.getElementById('loadingIndicator').style.display = 'block';
+            
+            for (const config of template) {
+                const existingConfig = configurations.find(c => c.config_key === config.key);
+                const url = existingConfig ? `/api/ai/config/${config.key}` : '/api/ai/config';
+                const method = existingConfig ? 'PUT' : 'POST';
+                
+                await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        config_key: config.key,
+                        config_value: config.value,
+                        config_type: config.type,
+                        description: config.desc
+                    })
+                });
+            }
+            
+            alert(`${displayName} template applied successfully!`);
+            loadConfigurations();
+        } catch (error) {
+            console.error('Error applying template:', error);
+            alert('Error applying template');
+        } finally {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+    }
+</script>
+
+<style>
+.ai-status-container, .config-container, .templates-container {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.status-display {
+    margin: 1rem 0;
+}
+
+.status-card {
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid;
+}
+
+.status-card.operational {
+    border-color: #4CAF50;
+    background-color: #f8fff8;
+}
+
+.status-card.disabled {
+    border-color: #f44336;
+    background-color: #fff8f8;
+}
+
+.status-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.status-icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+.status-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.status-info p {
+    margin: 0.25rem 0 0 0;
+    color: #666;
+}
+
+.status-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.status-section h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.status-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.status-success {
+    color: #4CAF50;
+}
+
+.status-error {
+    color: #f44336;
+}
+
+.feature-status.enabled {
+    color: #4CAF50;
+}
+
+.feature-status.disabled {
+    color: #f44336;
+}
+
+.status-help {
+    background: #f5f5f5;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.status-help h4 {
+    margin: 0 0 0.5rem 0;
+}
+
+.status-help ol {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.config-actions {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.config-form {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.boolean-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.bool-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bool-btn.active {
+    background: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.config-item {
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.config-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.config-info h4 {
+    margin: 0;
+    font-family: monospace;
+    color: #333;
+}
+
+.config-type {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
+.config-actions {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.config-content {
+    padding: 1rem;
+}
+
+.config-value, .config-description {
+    margin-bottom: 0.5rem;
+}
+
+.config-value {
+    font-family: monospace;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    word-break: break-all;
+}
+
+.config-metadata {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.template-card {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.template-card h4 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+}
+
+.template-card p {
+    margin: 0 0 1rem 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.small {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+}
+
+.loading {
+    text-align: center;
+    color: #666;
+    padding: 2rem;
+}
+
+.error-message {
+    text-align: center;
+    color: #f44336;
+    padding: 2rem;
+}
+
+.empty-state {
+    text-align: center;
+    color: #666;
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .status-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .config-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .templates-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
+    <title>Class Management</title>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/quiz_builder" class="nav-link">Create Quiz</a>
+</nav>
+
+<div class="container">
+    <h1>Class Management</h1>
+    
+    <!-- Add New Class Form -->
+    <div class="class-form-container">
+        <h2>Add New Class</h2>
+        <div class="form-group">
+            <label for="className">Class Name:</label>
+            <input type="text" id="className" placeholder="Enter class name..." required>
+        </div>
+        <div class="form-group">
+            <label for="classDescription">Description:</label>
+            <textarea id="classDescription" placeholder="Enter class description (optional)..."></textarea>
+        </div>
+        <button onclick="createClass()" class="add-btn">Create Class</button>
+    </div>
+
+    <!-- Edit Class Form (hidden by default) -->
+    <div id="editClassContainer" class="class-form-container" style="display: none;">
+        <h2>Edit Class</h2>
+        <div class="form-group">
+            <label for="editClassName">Class Name:</label>
+            <input type="text" id="editClassName" required>
+        </div>
+        <div class="form-group">
+            <label for="editClassDescription">Description:</label>
+            <textarea id="editClassDescription"></textarea>
+        </div>
+        <button onclick="updateClass()" class="add-btn">Update Class</button>
+        <button onclick="cancelEdit()" class="delete-btn">Cancel</button>
+    </div>
+
+    <!-- Classes List -->
+    <h2>Existing Classes</h2>
+    <div id="classesList"></div>
+</div>
+
+<script>
+    let currentEditingClassId = null;
+
+    async function fetchClasses() {
+        try {
+            const response = await fetch('/api/classes');
+            if (response.ok) {
+                const classes = await response.json();
+                displayClasses(classes);
+            } else {
+                alert('Failed to fetch classes');
+            }
+        } catch (error) {
+            console.error('Error fetching classes:', error);
+            alert('Error fetching classes');
+        }
+    }
+
+    function displayClasses(classes) {
+        const container = document.getElementById('classesList');
+        container.innerHTML = '';
+
+        if (classes.length === 0) {
+            container.innerHTML = '<p>No classes found. Create your first class above!</p>';
+            return;
+        }
+
+        classes.forEach(cls => {
+            const classDiv = document.createElement('div');
+            classDiv.classList.add('class-item');
+            
+            const quizCountText = cls.quiz_count === 1 ? '1 quiz' : `${cls.quiz_count} quizzes`;
+            
+            classDiv.innerHTML = `
+                <div class="class-info">
+                    <h3>${cls.name}</h3>
+                    <p class="class-description">${cls.description || 'No description'}</p>
+                    <p class="quiz-count">${quizCountText}</p>
+                </div>
+                <div class="class-actions">
+                    <button onclick="editClass(${cls.id}, '${cls.name}', '${cls.description || ''}')" class="edit-btn">Edit</button>
+                    <button onclick="viewClassQuizzes(${cls.id})" class="add-btn">View Quizzes</button>
+                    <button onclick="deleteClass(${cls.id}, '${cls.name}', ${cls.quiz_count})" class="delete-btn">Delete</button>
+                </div>
+            `;
+            
+            container.appendChild(classDiv);
+        });
+    }
+
+    async function createClass() {
+        const name = document.getElementById('className').value.trim();
+        const description = document.getElementById('classDescription').value.trim();
+
+        if (!name) {
+            alert('Class name is required');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/classes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, description })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(`Class "${name}" created successfully!`);
+                document.getElementById('className').value = '';
+                document.getElementById('classDescription').value = '';
+                fetchClasses();
+            } else {
+                alert(`Failed to create class: ${result.detail}`);
+            }
+        } catch (error) {
+            console.error('Error creating class:', error);
+            alert('Error creating class');
+        }
+    }
+
+    function editClass(id, name, description) {
+        currentEditingClassId = id;
+        document.getElementById('editClassName').value = name;
+        document.getElementById('editClassDescription').value = description;
+        document.getElementById('editClassContainer').style.display = 'block';
+        
+        // Scroll to edit form
+        document.getElementById('editClassContainer').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function updateClass() {
+        if (!currentEditingClassId) return;
+
+        const name = document.getElementById('editClassName').value.trim();
+        const description = document.getElementById('editClassDescription').value.trim();
+
+        if (!name) {
+            alert('Class name is required');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/classes/${currentEditingClassId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, description })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(`Class "${name}" updated successfully!`);
+                cancelEdit();
+                fetchClasses();
+            } else {
+                alert(`Failed to update class: ${result.detail}`);
+            }
+        } catch (error) {
+            console.error('Error updating class:', error);
+            alert('Error updating class');
+        }
+    }
+
+    function cancelEdit() {
+        currentEditingClassId = null;
+        document.getElementById('editClassContainer').style.display = 'none';
+        document.getElementById('editClassName').value = '';
+        document.getElementById('editClassDescription').value = '';
+    }
+
+    async function deleteClass(id, name, quizCount) {
+        if (quizCount > 0) {
+            alert(`Cannot delete class "${name}" because it contains ${quizCount} quiz(es). Please delete or reassign the quizzes first.`);
+            return;
+        }
+
+        if (!confirm(`Are you sure you want to delete the class "${name}"?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/classes/${id}`, {
+                method: 'DELETE'
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(`Class "${name}" deleted successfully!`);
+                fetchClasses();
+            } else {
+                alert(`Failed to delete class: ${result.detail}`);
+            }
+        } catch (error) {
+            console.error('Error deleting class:', error);
+            alert('Error deleting class');
+        }
+    }
+
+    function viewClassQuizzes(classId) {
+        // Navigate to home page with class filter (we'll implement this next)
+        window.location.href = `/?class=${classId}`;
+    }
+
+    // Load classes when page loads
+    document.addEventListener('DOMContentLoaded', fetchClasses);
+</script>
+</body>
+</html>

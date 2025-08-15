@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
+    <title>Question Bank</title>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/class_management" class="nav-link">Manage Classes</a>
+    <a href="/quiz_builder" class="nav-link">Create Quiz</a>
+</nav>
+
+<div class="container">
+    <h1>Question Bank</h1>
+    
+    <!-- Add New Question Form -->
+    <div class="question-form-container">
+        <h2>Add New Question to Bank</h2>
+        
+        <div class="form-group">
+            <label for="questionClass">Class:</label>
+            <select id="questionClass" required>
+                <option value="">Select a class...</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="questionText">Question:</label>
+            <textarea id="questionText" placeholder="Enter your question..." required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="questionTypeSelect">Question Type:</label>
+            <select id="questionTypeSelect" onchange="handleQuestionTypeChange()">
+                <option value="multiple_choice">Multiple Choice</option>
+                <option value="true_false">True/False</option>
+                <option value="short_answer">Short Answer</option>
+                <option value="fill_blank">Fill in the Blank</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="questionDifficulty">Difficulty:</label>
+            <select id="questionDifficulty">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="questionTags">Tags (comma-separated):</label>
+            <input type="text" id="questionTags" placeholder="e.g., algebra, equations, basics">
+        </div>
+        
+        <div id="answersContainer">
+            <label>Answer Options:</label>
+            <div id="answersList"></div>
+            <button type="button" onclick="addAnswerOption()" class="add-btn" id="addAnswerBtn">Add Answer Option</button>
+        </div>
+        
+        <div class="form-group">
+            <label for="correctAnswerSelect">Correct Answer:</label>
+            <select id="correctAnswerSelect" required>
+                <option value="">Select correct answer...</option>
+            </select>
+        </div>
+        
+        <button onclick="saveQuestionToBank()" class="add-btn">Save to Question Bank</button>
+    </div>
+
+    <!-- Filters and Search -->
+    <div class="filters-container">
+        <h2>Question Bank</h2>
+        
+        <div class="filter-row">
+            <div class="form-group">
+                <label for="filterClass">Filter by Class:</label>
+                <select id="filterClass" onchange="filterQuestions()">
+                    <option value="">All Classes</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="filterType">Filter by Type:</label>
+                <select id="filterType" onchange="filterQuestions()">
+                    <option value="">All Types</option>
+                    <option value="multiple_choice">Multiple Choice</option>
+                    <option value="true_false">True/False</option>
+                    <option value="short_answer">Short Answer</option>
+                    <option value="fill_blank">Fill in the Blank</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="filterDifficulty">Filter by Difficulty:</label>
+                <select id="filterDifficulty" onchange="filterQuestions()">
+                    <option value="">All Difficulties</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="searchQuery">Search Questions:</label>
+            <input type="text" id="searchQuery" placeholder="Search by question text or tags..." onkeyup="filterQuestions()">
+        </div>
+    </div>
+
+    <!-- Question Bank List -->
+    <div id="questionBankList"></div>
+    
+    <!-- Generate Random Quiz Section -->
+    <div class="random-quiz-container">
+        <h2>Generate Random Quiz from Bank</h2>
+        
+        <div class="form-group">
+            <label for="randomQuizClass">Class:</label>
+            <select id="randomQuizClass" required>
+                <option value="">Select a class...</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="numQuestions">Number of Questions:</label>
+            <input type="number" id="numQuestions" value="10" min="1" max="50">
+        </div>
+        
+        <div class="form-group">
+            <label for="randomQuizDifficulty">Difficulty (optional):</label>
+            <select id="randomQuizDifficulty">
+                <option value="">Any Difficulty</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        
+        <button onclick="generateRandomQuiz()" class="add-btn">Generate Random Quiz</button>
+    </div>
+</div>
+
+<script>
+    let allQuestions = [];
+    let answerCounter = 0;
+
+    async function fetchClasses() {
+        try {
+            const response = await fetch('/api/classes');
+            const classes = await response.json();
+            
+            const selects = ['questionClass', 'filterClass', 'randomQuizClass'];
+            selects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                const currentValue = select.value;
+                
+                if (selectId === 'questionClass' || selectId === 'randomQuizClass') {
+                    select.innerHTML = '<option value="">Select a class...</option>';
+                } else {
+                    select.innerHTML = '<option value="">All Classes</option>';
+                }
+                
+                classes.forEach(cls => {
+                    const option = document.createElement('option');
+                    option.value = cls.id;
+                    option.textContent = cls.name;
+                    select.appendChild(option);
+                });
+                
+                if (currentValue) select.value = currentValue;
+            });
+            
+        } catch (error) {
+            console.error('Error fetching classes:', error);
+            alert('Error loading classes');
+        }
+    }
+
+    async function fetchQuestions() {
+        try {
+            const response = await fetch('/api/question-bank');
+            allQuestions = await response.json();
+            filterQuestions();
+        } catch (error) {
+            console.error('Error fetching questions:', error);
+            alert('Error loading questions');
+        }
+    }
+
+    function handleQuestionTypeChange() {
+        const questionType = document.getElementById('questionTypeSelect').value;
+        const answersList = document.getElementById('answersList');
+        const addBtn = document.getElementById('addAnswerBtn');
+        const correctSelect = document.getElementById('correctAnswerSelect');
+        
+        answersList.innerHTML = '';
+        correctSelect.innerHTML = '<option value="">Select correct answer...</option>';
+        answerCounter = 0;
+        
+        if (questionType === 'true_false') {
+            addAnswerOption('True');
+            addAnswerOption('False');
+            addBtn.style.display = 'none';
+        } else if (questionType === 'short_answer' || questionType === 'fill_blank') {
+            addAnswerOption('');
+            addBtn.style.display = 'none';
+        } else {
+            addBtn.style.display = 'inline-block';
+            // Add default options for multiple choice
+            addAnswerOption('');
+            addAnswerOption('');
+        }
+    }
+
+    function addAnswerOption(value = '') {
+        const answersList = document.getElementById('answersList');
+        const answerId = `answer_${answerCounter++}`;
+        
+        const answerDiv = document.createElement('div');
+        answerDiv.classList.add('answer-option');
+        answerDiv.innerHTML = `
+            <input type="text" id="${answerId}" value="${value}" placeholder="Enter answer option..." onkeyup="updateCorrectAnswerOptions()">
+            <button onclick="removeAnswerOption(this)" class="delete-btn">Remove</button>
+        `;
+        
+        answersList.appendChild(answerDiv);
+        updateCorrectAnswerOptions();
+    }
+
+    function removeAnswerOption(button) {
+        button.parentElement.remove();
+        updateCorrectAnswerOptions();
+    }
+
+    function updateCorrectAnswerOptions() {
+        const correctSelect = document.getElementById('correctAnswerSelect');
+        const currentValue = correctSelect.value;
+        
+        correctSelect.innerHTML = '<option value="">Select correct answer...</option>';
+        
+        const answerInputs = document.querySelectorAll('#answersList input[type="text"]');
+        answerInputs.forEach((input, index) => {
+            if (input.value.trim()) {
+                const option = document.createElement('option');
+                option.value = input.value;
+                option.textContent = `Option ${index + 1}: ${input.value}`;
+                correctSelect.appendChild(option);
+            }
+        });
+        
+        if (currentValue) correctSelect.value = currentValue;
+    }
+
+    async function saveQuestionToBank() {
+        const classId = document.getElementById('questionClass').value;
+        const questionText = document.getElementById('questionText').value;
+        const questionType = document.getElementById('questionTypeSelect').value;
+        const difficulty = document.getElementById('questionDifficulty').value;
+        const tags = document.getElementById('questionTags').value;
+        const correctAnswer = document.getElementById('correctAnswerSelect').value;
+        
+        if (!classId || !questionText.trim() || !correctAnswer) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        const options = [];
+        const answerInputs = document.querySelectorAll('#answersList input[type="text"]');
+        answerInputs.forEach(input => {
+            if (input.value.trim()) {
+                options.push(input.value.trim());
+            }
+        });
+        
+        if (options.length === 0) {
+            alert('Please add at least one answer option');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/question-bank', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    question: questionText,
+                    question_type: questionType,
+                    options: options,
+                    correct_answer: correctAnswer,
+                    class_id: parseInt(classId),
+                    difficulty: difficulty,
+                    tags: tags
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                alert('Question saved to bank successfully!');
+                // Clear form
+                document.getElementById('questionText').value = '';
+                document.getElementById('questionTags').value = '';
+                document.getElementById('answersList').innerHTML = '';
+                document.getElementById('correctAnswerSelect').innerHTML = '<option value="">Select correct answer...</option>';
+                handleQuestionTypeChange(); // Reset to default
+                fetchQuestions(); // Refresh the list
+            } else {
+                alert(`Failed to save question: ${result.detail}`);
+            }
+        } catch (error) {
+            console.error('Error saving question:', error);
+            alert('Error saving question');
+        }
+    }
+
+    function filterQuestions() {
+        const classFilter = document.getElementById('filterClass').value;
+        const typeFilter = document.getElementById('filterType').value;
+        const difficultyFilter = document.getElementById('filterDifficulty').value;
+        const searchQuery = document.getElementById('searchQuery').value.toLowerCase();
+        
+        let filteredQuestions = allQuestions.filter(q => {
+            const matchesClass = !classFilter || q.class_id == classFilter;
+            const matchesType = !typeFilter || q.question_type === typeFilter;
+            const matchesDifficulty = !difficultyFilter || q.difficulty === difficultyFilter;
+            const matchesSearch = !searchQuery || 
+                q.question.toLowerCase().includes(searchQuery) ||
+                q.tags.some(tag => tag.toLowerCase().includes(searchQuery));
+            
+            return matchesClass && matchesType && matchesDifficulty && matchesSearch;
+        });
+        
+        displayQuestions(filteredQuestions);
+    }
+
+    function displayQuestions(questions) {
+        const container = document.getElementById('questionBankList');
+        
+        if (questions.length === 0) {
+            container.innerHTML = '<p>No questions found matching your criteria.</p>';
+            return;
+        }
+        
+        container.innerHTML = '';
+        
+        questions.forEach(q => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question-bank-item');
+            
+            const tagsDisplay = q.tags.length > 0 ? q.tags.join(', ') : 'No tags';
+            
+            questionDiv.innerHTML = `
+                <div class="question-info">
+                    <h4>${q.question}</h4>
+                    <div class="question-meta">
+                        <span class="meta-item">Type: ${q.question_type.replace('_', ' ')}</span>
+                        <span class="meta-item">Class: ${q.class_name}</span>
+                        <span class="meta-item">Difficulty: ${q.difficulty}</span>
+                        <span class="meta-item">Tags: ${tagsDisplay}</span>
+                    </div>
+                    <div class="question-options">
+                        <strong>Options:</strong> ${q.options.join(' | ')}
+                        <br><strong>Correct:</strong> ${q.correct_answer}
+                    </div>
+                </div>
+                <div class="question-actions">
+                    <button onclick="deleteQuestion(${q.id})" class="delete-btn">Delete</button>
+                </div>
+            `;
+            
+            container.appendChild(questionDiv);
+        });
+    }
+
+    async function deleteQuestion(questionId) {
+        if (!confirm('Are you sure you want to delete this question?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/question-bank/${questionId}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                alert('Question deleted successfully!');
+                fetchQuestions();
+            } else {
+                alert('Failed to delete question');
+            }
+        } catch (error) {
+            console.error('Error deleting question:', error);
+            alert('Error deleting question');
+        }
+    }
+
+    async function generateRandomQuiz() {
+        const classId = document.getElementById('randomQuizClass').value;
+        const numQuestions = document.getElementById('numQuestions').value;
+        const difficulty = document.getElementById('randomQuizDifficulty').value;
+        
+        if (!classId || !numQuestions) {
+            alert('Please select a class and number of questions');
+            return;
+        }
+        
+        try {
+            let url = `/api/question-bank/generate-quiz?class_id=${classId}&num_questions=${numQuestions}`;
+            if (difficulty) url += `&difficulty=${difficulty}`;
+            
+            const response = await fetch(url, { method: 'POST' });
+            const result = await response.json();
+            
+            if (response.ok) {
+                // Create a new quiz with the generated questions
+                const quizTitle = `Random Quiz - ${new Date().toLocaleDateString()}`;
+                
+                const quizData = {
+                    title: quizTitle,
+                    class_id: parseInt(classId),
+                    questions: result
+                };
+                
+                const createResponse = await fetch('/api/quizzes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(quizData)
+                });
+                
+                if (createResponse.ok) {
+                    const createResult = await createResponse.json();
+                    alert(`Random quiz "${quizTitle}" created successfully!`);
+                    window.location.href = `/quiz_practice/${createResult.quiz_id}`;
+                } else {
+                    alert('Failed to create quiz from generated questions');
+                }
+            } else {
+                alert(`Failed to generate quiz: ${result.detail}`);
+            }
+        } catch (error) {
+            console.error('Error generating quiz:', error);
+            alert('Error generating quiz');
+        }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchClasses();
+        fetchQuestions();
+        handleQuestionTypeChange(); // Set up default question type
+    });
+</script>
+</body>
+</html>

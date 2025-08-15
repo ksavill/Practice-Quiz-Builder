@@ -14,9 +14,18 @@
     
 <h1>Quiz Builder</h1>
 
-<div>
-    <label for="quizTitle">Quiz Title:</label>
-    <input type="text" id="quizTitle" placeholder="Enter the quiz title...">
+<div class="quiz-metadata">
+    <div class="form-group">
+        <label for="classSelect">Class:</label>
+        <select id="classSelect" required>
+            <option value="">Select a class...</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="quizTitle">Quiz Title:</label>
+        <input type="text" id="quizTitle" placeholder="Enter the quiz title..." required>
+    </div>
 </div>
 
 
@@ -25,13 +34,68 @@
 <br>
 <button onclick="addQuestion()" class="add-btn">Add Question</button>
 <br>
-<button id="submitButton" onclick="exportQuiz()" class="add-btn">Create Quiz</button>
+
+<!-- Advanced Options Section -->
+<div class="advanced-options">
+    <button onclick="toggleAdvancedOptions()" class="advanced-toggle">⚙️ Advanced Options</button>
+    
+    <div id="advancedOptionsPanel" class="advanced-panel" style="display: none;">
+        <h3>JSON Question Import</h3>
+        
+        <div class="json-actions">
+            <button onclick="downloadTemplate()" class="add-btn">📄 Download JSON Template</button>
+            <button onclick="copyPromptExample()" class="add-btn">📋 Copy Example Prompt</button>
+            <button onclick="document.getElementById('jsonFileInput').click()" class="add-btn">📁 Import JSON Questions</button>
+            <input type="file" id="jsonFileInput" accept=".json" style="display: none;" onchange="handleJsonImport(event)">
+        </div>
+        
+        <div class="example-prompt-info">
+            <h4>💡 Pro Tip: AI Workflow</h4>
+            <p>For best results with AI tools like ChatGPT or Claude:</p>
+            <ol>
+                <li><strong>Download the template</strong> using the button above</li>
+                <li><strong>Copy the example prompt</strong> and paste it to your AI tool</li>
+                <li><strong>Attach the template file</strong> along with your raw questions/content</li>
+                <li><strong>Import the generated JSON</strong> back into this quiz builder</li>
+            </ol>
+        </div>
+        
+        <div class="json-instructions">
+            <h4>How to use JSON Import:</h4>
+            <ol>
+                <li><strong>Download Template:</strong> Get the JSON template with examples</li>
+                <li><strong>Generate Content:</strong> Use AI tools (ChatGPT, Claude, etc.) to fill the template</li>
+                <li><strong>Import & Preview:</strong> Upload your JSON to see questions in the builder</li>
+                <li><strong>Edit & Submit:</strong> Make final tweaks and create your quiz</li>
+            </ol>
+            <p><strong>Supported Types:</strong> Multiple Choice, Fill-in-the-Blank</p>
+        </div>
+        
+        <!-- JSON Preview Section -->
+        <div id="jsonPreviewSection" class="json-preview-section" style="display: none;">
+            <h4>JSON Import Preview</h4>
+            <div id="jsonValidationResults" class="validation-results"></div>
+            <div id="jsonQuestionsList" class="json-questions-list"></div>
+            <div class="json-import-actions">
+                <button onclick="importValidQuestions()" class="add-btn">Import Valid Questions</button>
+                <button onclick="clearJsonPreview()" class="delete-btn">Clear Preview</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="quiz-actions">
+    <button id="submitButton" onclick="exportQuiz()" class="add-btn">Create Quiz</button>
+    <button id="exportButton" onclick="exportCurrentQuiz()" class="export-btn" style="display: none;">Export Quiz</button>
+</div>
 
 <script>
     let quizData = [];
     let questionCounter = 0;
     let isEditMode = false;
     let quizId = null;
+    let jsonImportData = null;
 
     function addQuestion(question = {}) {
         const questionDiv = document.createElement('div');
@@ -40,8 +104,20 @@
         questionDiv.innerHTML = `
             <label class="question-label">Question:</label>
             <textarea class="question-text" placeholder="Enter the question here...">${question.question || ''}</textarea>
+            
+            <div class="question-type-container">
+                <label for="questionType${questionCounter}">Question Type:</label>
+                <select class="question-type" id="questionType${questionCounter}" onchange="handleQuestionTypeChange(this)">
+                    <option value="multiple_choice" ${(question.question_type || 'multiple_choice') === 'multiple_choice' ? 'selected' : ''}>Multiple Choice</option>
+                    <option value="true_false" ${question.question_type === 'true_false' ? 'selected' : ''}>True/False</option>
+                    <option value="short_answer" ${question.question_type === 'short_answer' ? 'selected' : ''}>Short Answer</option>
+                    <option value="fill_blank" ${question.question_type === 'fill_blank' ? 'selected' : ''}>Fill in the Blank</option>
+                </select>
+            </div>
+            
             <div class="answers"></div>
             <button onclick="addAnswer(this.parentNode)" class="add-btn">Add Answer</button>
+            <button onclick="saveQuestionToBank(this.parentNode)" class="save-to-bank-btn">Save to Question Bank</button>
             <button onclick="removeQuestion(this.parentNode)" class="delete-btn">Delete Question</button>
         `;
         const answersDiv = questionDiv.querySelector('.answers');
@@ -82,11 +158,126 @@
         });
     }
 
+    function handleQuestionTypeChange(selectElement) {
+        const questionDiv = selectElement.closest('.question-container');
+        const answersDiv = questionDiv.querySelector('.answers');
+        const questionType = selectElement.value;
+        
+        // Clear existing answers
+        answersDiv.innerHTML = '';
+        
+        // Add appropriate answers based on question type
+        if (questionType === 'true_false') {
+            addAnswer(questionDiv, 'True', false);
+            addAnswer(questionDiv, 'False', false);
+            // Hide the "Add Answer" button for True/False
+            questionDiv.querySelector('button[onclick*="addAnswer"]').style.display = 'none';
+        } else if (questionType === 'short_answer' || questionType === 'fill_blank') {
+            // For short answer and fill in the blank, we don't need multiple options
+            addAnswer(questionDiv, '', false);
+            questionDiv.querySelector('button[onclick*="addAnswer"]').style.display = 'none';
+        } else if (questionType === 'multiple_choice') {
+            // Show the "Add Answer" button for multiple choice
+            questionDiv.querySelector('button[onclick*="addAnswer"]').style.display = 'inline-block';
+            // Add default answers if none exist
+            if (answersDiv.children.length === 0) {
+                addAnswer(questionDiv, '', false);
+                addAnswer(questionDiv, '', false);
+            }
+        }
+    }
+
+    async function saveQuestionToBank(questionDiv) {
+        const classId = document.getElementById('classSelect').value;
+        
+        if (!classId) {
+            alert('Please select a class first');
+            return;
+        }
+        
+        const questionText = questionDiv.querySelector('.question-text').value;
+        const questionType = questionDiv.querySelector('.question-type').value;
+        const answersDiv = questionDiv.querySelector('.answers');
+        
+        if (!questionText.trim()) {
+            alert('Please enter a question first');
+            return;
+        }
+        
+        let options = [];
+        let correctAnswer = '';
+        answersDiv.querySelectorAll('.answer-container').forEach((aDiv) => {
+            const answerText = aDiv.querySelector('.answer-text').value;
+            if (answerText.trim()) {
+                options.push(answerText);
+            }
+            if (aDiv.querySelector('.is-correct').checked) {
+                correctAnswer = answerText;
+            }
+        });
+        
+        if (options.length === 0) {
+            alert('Please add at least one answer option');
+            return;
+        }
+        
+        if (!correctAnswer) {
+            alert('Please select a correct answer');
+            return;
+        }
+        
+        // Prompt for difficulty and tags
+        const difficulty = prompt('Enter difficulty (easy, medium, hard):', 'medium');
+        if (!difficulty) return;
+        
+        const tags = prompt('Enter tags (comma-separated, optional):', '');
+        
+        try {
+            const response = await fetch('/api/question-bank', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    question: questionText,
+                    question_type: questionType,
+                    options: options,
+                    correct_answer: correctAnswer,
+                    class_id: parseInt(classId),
+                    difficulty: difficulty.toLowerCase(),
+                    tags: tags || ''
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                alert('Question saved to bank successfully!');
+            } else {
+                alert(`Failed to save question: ${result.detail}`);
+            }
+        } catch (error) {
+            console.error('Error saving question to bank:', error);
+            alert('Error saving question to bank');
+        }
+    }
+
     async function exportQuiz() {
         quizData = [];
         const quizTitle = document.getElementById('quizTitle').value;
+        const classId = document.getElementById('classSelect').value;
+        
+        if (!classId) {
+            alert('Please select a class for the quiz.');
+            return;
+        }
+        
+        if (!quizTitle.trim()) {
+            alert('Please enter a quiz title.');
+            return;
+        }
+        
         document.querySelectorAll('.question-container').forEach((qDiv) => {
             const questionText = qDiv.querySelector('.question-text').value;
+            const questionType = qDiv.querySelector('.question-type').value;
             const answersDiv = qDiv.querySelector('.answers');
             let options = [];
             let correctAnswer = '';
@@ -97,7 +288,12 @@
                     correctAnswer = answerText;
                 }
             });
-            quizData.push({ question: questionText, options, correct_answer: correctAnswer });
+            quizData.push({ 
+                question: questionText, 
+                question_type: questionType,
+                options, 
+                correct_answer: correctAnswer 
+            });
         });
 
         const url = isEditMode ? `/api/quizzes/${quizId}` : '/api/quizzes';
@@ -106,7 +302,11 @@
         const response = await fetch(url, {
             method: method,
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: quizTitle, questions: quizData })
+            body: JSON.stringify({ 
+                title: quizTitle, 
+                class_id: parseInt(classId),
+                questions: quizData 
+            })
         });
 
         const result = await response.json();
@@ -119,18 +319,313 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    async function fetchClasses() {
+        try {
+            const response = await fetch('/api/classes');
+            const classes = await response.json();
+            const select = document.getElementById('classSelect');
+            
+            // Clear existing options except the first one
+            select.innerHTML = '<option value="">Select a class...</option>';
+            
+            classes.forEach(cls => {
+                const option = document.createElement('option');
+                option.value = cls.id;
+                option.textContent = cls.name;
+                select.appendChild(option);
+            });
+            
+        } catch (error) {
+            console.error('Error fetching classes:', error);
+            alert('Error loading classes. Please refresh the page.');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Check AI availability first
+        await checkAIAvailability();
+        
+        // Load classes first
+        await fetchClasses();
+        
         {% if quiz is defined %}
-            const quizDataElement = {{ quiz | tojson | safe }};
-            if (quizDataElement) {
-                isEditMode = true;
-                quizId = quizDataElement.id;
-                document.getElementById('quizTitle').value = quizDataElement.title;
-                quizDataElement.questions.forEach(question => addQuestion(question));
-                document.getElementById('submitButton').textContent = 'Submit Changes';
+        const quizDataElement = {{ quiz | tojson | safe }};
+        if (quizDataElement) {
+            isEditMode = true;
+            quizId = quizDataElement.id;
+            document.getElementById('quizTitle').value = quizDataElement.title;
+            
+            // Set the class selection
+            if (quizDataElement.class_id) {
+                document.getElementById('classSelect').value = quizDataElement.class_id;
             }
+            
+            quizDataElement.questions.forEach(question => addQuestion(question));
+            document.getElementById('submitButton').textContent = 'Submit Changes';
+            document.getElementById('exportButton').style.display = 'inline-block';
+        }
         {% endif %}
     });
+
+    // Advanced Options Functions
+    function toggleAdvancedOptions() {
+        const panel = document.getElementById('advancedOptionsPanel');
+        const isVisible = panel.style.display !== 'none';
+        panel.style.display = isVisible ? 'none' : 'block';
+        
+        const button = document.querySelector('.advanced-toggle');
+        button.textContent = isVisible ? '⚙️ Advanced Options' : '⚙️ Hide Advanced Options';
+    }
+
+    async function downloadTemplate() {
+        try {
+            const response = await fetch('/api/question-template');
+            const template = await response.json();
+            
+            const blob = new Blob([JSON.stringify(template, null, 2)], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'question-template.json';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            
+            alert('Template downloaded! You can now use this with AI tools to generate questions.');
+        } catch (error) {
+            console.error('Error downloading template:', error);
+            alert('Error downloading template');
+        }
+    }
+
+    async function copyPromptExample() {
+        const examplePrompt = `Attached is a json file for a quiz template I want you to fill out based on the questions below. I want a mix of multiple choice and fill in the blank.
+
+[Paste your raw questions/content here]`;
+        
+        try {
+            await navigator.clipboard.writeText(examplePrompt);
+            
+            // Show success feedback
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✅ Copied!';
+            button.style.backgroundColor = '#28a745';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.backgroundColor = '';
+            }, 2000);
+            
+        } catch (error) {
+            // Fallback for browsers that don't support clipboard API
+            const textArea = document.createElement('textarea');
+            textArea.value = examplePrompt;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            alert('Example prompt copied to clipboard!');
+        }
+    }
+
+    function handleJsonImport(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const jsonData = JSON.parse(e.target.result);
+                validateAndPreviewJson(jsonData);
+            } catch (error) {
+                alert('Invalid JSON file. Please check the format and try again.');
+                console.error('JSON parse error:', error);
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    async function validateAndPreviewJson(jsonData) {
+        try {
+            const response = await fetch('/api/validate-json-questions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ questions: jsonData.questions || jsonData })
+            });
+            
+            const validationResult = await response.json();
+            
+            if (response.ok) {
+                jsonImportData = validationResult;
+                displayJsonPreview(validationResult);
+            } else {
+                alert(`Validation failed: ${validationResult.detail}`);
+            }
+        } catch (error) {
+            console.error('Error validating JSON:', error);
+            alert('Error validating JSON questions');
+        }
+    }
+
+    function displayJsonPreview(validationResult) {
+        const previewSection = document.getElementById('jsonPreviewSection');
+        const resultsDiv = document.getElementById('jsonValidationResults');
+        const questionsListDiv = document.getElementById('jsonQuestionsList');
+        
+        // Show validation summary
+        resultsDiv.innerHTML = `
+            <div class="validation-summary ${validationResult.is_valid ? 'valid' : 'invalid'}">
+                <h5>Validation Results</h5>
+                <p><strong>Total Questions:</strong> ${validationResult.total_questions}</p>
+                <p><strong>Valid Questions:</strong> ${validationResult.valid_questions}</p>
+                <p><strong>Status:</strong> ${validationResult.is_valid ? '✅ All Valid' : '⚠️ Issues Found'}</p>
+                ${validationResult.validation_errors.length > 0 ? `
+                    <div class="validation-errors">
+                        <h6>Errors:</h6>
+                        <ul>${validationResult.validation_errors.map(err => `<li>${err}</li>`).join('')}</ul>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        
+        // Show question previews
+        questionsListDiv.innerHTML = '';
+        validationResult.questions.forEach((question, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('json-question-preview');
+            if (!question.is_valid) {
+                questionDiv.classList.add('invalid');
+            }
+            
+            let optionsDisplay = '';
+            if (question.question_type === 'fill_blank') {
+                optionsDisplay = `<strong>Acceptable Answers:</strong> ${question.acceptable_answers.join(', ')}`;
+                // Show blank count if multiple blanks exist
+                const blankCount = (question.question || '').split('{blank}').length - 1;
+                if (blankCount > 1) {
+                    optionsDisplay += `<br><strong>Blanks:</strong> ${blankCount} blanks to fill`;
+                }
+            } else {
+                optionsDisplay = `<strong>Options:</strong> ${question.options.join(' | ')}<br><strong>Correct:</strong> ${question.correct_answer}`;
+            }
+            
+            questionDiv.innerHTML = `
+                <div class="question-preview-header">
+                    <span class="question-number">Question ${index + 1}</span>
+                    <span class="question-type-badge">${question.question_type.replace('_', ' ')}</span>
+                    <span class="question-difficulty">${question.difficulty}</span>
+                    ${question.is_valid ? '<span class="status-valid">✅</span>' : '<span class="status-invalid">❌</span>'}
+                </div>
+                <div class="question-preview-content">
+                    <p><strong>Q:</strong> ${question.question}</p>
+                    <p>${optionsDisplay}</p>
+                    ${question.explanation ? `<p><strong>Explanation:</strong> ${question.explanation}</p>` : ''}
+                    ${question.tags && question.tags.length > 0 ? `<p><strong>Tags:</strong> ${question.tags.join(', ')}</p>` : ''}
+                </div>
+                ${question.validation_errors.length > 0 ? `
+                    <div class="question-errors">
+                        <strong>Errors:</strong> ${question.validation_errors.join(', ')}
+                    </div>
+                ` : ''}
+            `;
+            
+            questionsListDiv.appendChild(questionDiv);
+        });
+        
+        previewSection.style.display = 'block';
+    }
+
+    function importValidQuestions() {
+        if (!jsonImportData) {
+            alert('No valid JSON data to import');
+            return;
+        }
+        
+        const validQuestions = jsonImportData.questions.filter(q => q.is_valid);
+        
+        if (validQuestions.length === 0) {
+            alert('No valid questions to import');
+            return;
+        }
+        
+        // Convert JSON questions to quiz builder format and add them
+        validQuestions.forEach(jsonQuestion => {
+            const questionData = {
+                question: jsonQuestion.question,
+                question_type: jsonQuestion.question_type,
+                options: jsonQuestion.options,
+                correct_answer: jsonQuestion.correct_answer,
+                acceptable_answers: jsonQuestion.acceptable_answers
+            };
+            
+            addQuestion(questionData);
+        });
+        
+        alert(`Successfully imported ${validQuestions.length} questions!`);
+        clearJsonPreview();
+        
+        // Close advanced options panel
+        document.getElementById('advancedOptionsPanel').style.display = 'none';
+        document.querySelector('.advanced-toggle').textContent = '⚙️ Advanced Options';
+    }
+
+    function clearJsonPreview() {
+        jsonImportData = null;
+        document.getElementById('jsonPreviewSection').style.display = 'none';
+        document.getElementById('jsonFileInput').value = '';
+    }
+
+            async function checkAIAvailability() {
+            try {
+                const response = await fetch('/api/ai/status');
+                const status = await response.json();
+                
+                if (!status.ai_available) {
+                    // AI not available - don't show any warning here since this page doesn't directly use AI
+                    // But we could add a subtle indicator in the advanced options if needed
+                    console.log('AI features not available in this session');
+                }
+            } catch (error) {
+                console.error('Error checking AI availability:', error);
+            }
+        }
+
+        async function exportCurrentQuiz() {
+            if (!isEditMode || !quizId) {
+                alert('Can only export saved quizzes. Please save the quiz first.');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/quizzes/${quizId}/export`);
+                
+                if (response.ok) {
+                    const exportData = await response.json();
+                    
+                    // Create blob and download
+                    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${exportData.export_info.quiz_title.replace(/[^a-zA-Z0-9]/g, '_')}_export.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    alert(`Quiz exported successfully!\n\nThe exported JSON can be imported back into any class or used as a template.`);
+                } else {
+                    const error = await response.json();
+                    alert(`Failed to export quiz: ${error.detail}`);
+                }
+            } catch (error) {
+                console.error('Error exporting quiz:', error);
+                alert('Error exporting quiz');
+            }
+        }
 </script>
 </body>
 </html>
