@@ -1,0 +1,283 @@
+{
+  "template_info": {
+    "version": "1.0",
+    "description": "Module 7: Planning for Capital Investments — quiz generated from user notes",
+    "supported_types": [
+      "multiple_choice",
+      "fill_blank"
+    ],
+    "generated_at": "2025-08-15T19:36:05"
+  },
+  "questions": [
+    {
+      "question": "Which of the following BEST describes a capital-budgeting decision?",
+      "question_type": "multiple_choice",
+      "options": [
+        "How to schedule employees next week",
+        "Whether to switch to a cheaper office coffee supplier",
+        "Decisions involving cash inflows and outflows beyond the current year",
+        "How to reorder inventory this afternoon"
+      ],
+      "correct_answer": "Decisions involving cash inflows and outflows beyond the current year",
+      "difficulty": "easy",
+      "tags": [
+        "capital budgeting",
+        "foundations"
+      ],
+      "explanation": "Capital expenditure decisions cover multi-period cash flows that extend beyond the current year."
+    },
+    {
+      "question": "Capital rationing refers to {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "choosing among positive-NPV projects when funds are limited",
+        "selecting only the project with the highest accounting profit"
+      ],
+      "correct_answer": "choosing among positive-NPV projects when funds are limited",
+      "acceptable_answers": [
+        "choosing among positive-NPV projects when funds are limited",
+        "selecting projects under a limited investment budget",
+        "allocating scarce investment funds among acceptable projects",
+        "ranking acceptable projects when capital is limited"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "capital rationing",
+        "decision rules"
+      ],
+      "explanation": "Under capital rationing, firms cannot fund all acceptable projects and must prioritize under a budget constraint."
+    },
+    {
+      "question": "The present value (PV) of $1 received n years from now at discount rate r equals {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "1/(1+r)^n",
+        "1 / (1 + r)^n",
+        "(1+r)^-n",
+        "(1 + r)^-n"
+      ],
+      "correct_answer": "1/(1+r)^n",
+      "acceptable_answers": [
+        "1/(1+r)^n",
+        "1 / (1 + r)^n",
+        "(1+r)^-n",
+        "(1 + r)^-n"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "time value of money",
+        "present value"
+      ],
+      "explanation": "Discounting moves a future dollar back to today using the factor 1/(1+r)^n."
+    },
+    {
+      "question": "A firm’s minimum acceptable rate of return used to discount project cash flows is usually related to the firm’s:",
+      "question_type": "multiple_choice",
+      "options": [
+        "marketing budget",
+        "cost of capital",
+        "current ratio",
+        "payback period threshold"
+      ],
+      "correct_answer": "cost of capital",
+      "difficulty": "easy",
+      "tags": [
+        "hurdle rate",
+        "cost of capital"
+      ],
+      "explanation": "The hurdle rate is commonly linked to the firm’s weighted average cost of capital (WACC)."
+    },
+    {
+      "question": "Which stream of cash flows qualifies as an annuity?",
+      "question_type": "multiple_choice",
+      "options": [
+        "$500 in year 1, $600 in year 2, $700 in year 3",
+        "$1,000 every year for 5 years, received at each year-end",
+        "$2,000 now, then $2,000 every quarter forever",
+        "$800 next month and $1,200 twelve months later"
+      ],
+      "correct_answer": "$1,000 every year for 5 years, received at each year-end",
+      "difficulty": "medium",
+      "tags": [
+        "annuities",
+        "time value of money"
+      ],
+      "explanation": "An annuity has equal payments at equal time intervals; here, a level annual end-of-year stream fits."
+    },
+    {
+      "question": "The present value of an n-year level annuity of amount X discounted at rate r equals X × {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "[1 - (1+r)^-n] / r",
+        "(1 - (1+r)^-n) / r",
+        "annuity factor"
+      ],
+      "correct_answer": "[1 - (1+r)^-n] / r",
+      "acceptable_answers": [
+        "[1 - (1+r)^-n] / r",
+        "(1 - (1+r)^-n) / r",
+        "annuity factor",
+        "the present value annuity factor",
+        "PVAF"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "annuities",
+        "present value"
+      ],
+      "explanation": "The PV of a level annuity is X times the PV annuity factor: (1 - (1+r)^-n)/r."
+    },
+    {
+      "question": "According to the Net Present Value (NPV) decision rule, a project should be:",
+      "question_type": "multiple_choice",
+      "options": [
+        "accepted if NPV > 0",
+        "accepted if payback < 2 years",
+        "accepted if IRR < hurdle rate",
+        "rejected if accounting profit < 0"
+      ],
+      "correct_answer": "accepted if NPV > 0",
+      "difficulty": "easy",
+      "tags": [
+        "NPV",
+        "decision rules"
+      ],
+      "explanation": "Positive NPV indicates value creation at the chosen discount rate; ceteris paribus, higher NPV is preferred."
+    },
+    {
+      "question": "The internal rate of return (IRR) of a project is the discount rate at which:",
+      "question_type": "multiple_choice",
+      "options": [
+        "the project’s accounting profit equals zero",
+        "the project’s payback period equals its life",
+        "the project’s NPV equals zero",
+        "the project’s present value index equals one"
+      ],
+      "correct_answer": "the project’s NPV equals zero",
+      "difficulty": "easy",
+      "tags": [
+        "IRR",
+        "decision rules"
+      ],
+      "explanation": "By definition, IRR sets the NPV of a project to zero."
+    },
+    {
+      "question": "Which of the following is NOT typically an investment cash outflow when evaluating a project?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Initial investment in equipment",
+        "Increase in working capital",
+        "Increase in operating expenses",
+        "Salvage value at the end of the project"
+      ],
+      "correct_answer": "Salvage value at the end of the project",
+      "difficulty": "medium",
+      "tags": [
+        "cash flows",
+        "outflows",
+        "inflows"
+      ],
+      "explanation": "Salvage value is an inflow; initial investment, added working capital, and higher operating costs are outflows."
+    },
+    {
+      "question": "The present value index (profitability index) equals {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "PV of cash inflows ÷ PV of cash outflows",
+        "present value of inflows divided by present value of outflows"
+      ],
+      "correct_answer": "PV of cash inflows ÷ PV of cash outflows",
+      "acceptable_answers": [
+        "PV of cash inflows ÷ PV of cash outflows",
+        "present value of inflows divided by present value of outflows",
+        "PV inflows / PV outflows",
+        "present value inflows / present value outflows"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "ranking",
+        "PVI"
+      ],
+      "explanation": "When projects differ in size, the index normalizes value per dollar invested; higher is better."
+    },
+    {
+      "question": "After-tax operating cash inflow from a $1,000 pre-tax inflow at a 35% tax rate is {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "$650",
+        "650",
+        "1000 × (1 − 0.35)",
+        "1000*(1-0.35)"
+      ],
+      "correct_answer": "$650",
+      "acceptable_answers": [
+        "$650",
+        "650",
+        "1000 × (1 − 0.35)",
+        "1000*(1-0.35)",
+        "1000 * (1 - 0.35)"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "taxes",
+        "after-tax cash flow"
+      ],
+      "explanation": "After-tax inflow = pre-tax inflow × (1 − tax rate) = 1000 × 0.65 = 650."
+    },
+    {
+      "question": "Depreciation affects cash flow via:",
+      "question_type": "multiple_choice",
+      "options": [
+        "the depreciation tax shield equal to depreciation × tax rate",
+        "a direct cash outflow equal to depreciation expense",
+        "reducing the discount rate used in NPV",
+        "increasing the salvage value"
+      ],
+      "correct_answer": "the depreciation tax shield equal to depreciation × tax rate",
+      "difficulty": "medium",
+      "tags": [
+        "taxes",
+        "depreciation",
+        "cash flow"
+      ],
+      "explanation": "Depreciation is non-cash but lowers taxable income; the resulting tax saving is a cash inflow."
+    },
+    {
+      "question": "The payback period for a project with a net initial investment I and constant annual net cash inflow C equals {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "I / C",
+        "initial investment / annual net cash inflow"
+      ],
+      "correct_answer": "I / C",
+      "acceptable_answers": [
+        "I / C",
+        "initial investment / annual net cash inflow",
+        "initial investment divided by annual net cash inflow"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "payback",
+        "liquidity"
+      ],
+      "explanation": "Payback measures time to recover the initial outlay; it ignores time value and post-payback cash flows."
+    },
+    {
+      "question": "The unadjusted (accrual accounting) rate of return is computed as:",
+      "question_type": "multiple_choice",
+      "options": [
+        "average annual net income increase ÷ net initial investment",
+        "average annual cash inflow ÷ average investment",
+        "NPV ÷ initial investment",
+        "IRR ÷ hurdle rate"
+      ],
+      "correct_answer": "average annual net income increase ÷ net initial investment",
+      "difficulty": "medium",
+      "tags": [
+        "AARR",
+        "performance metrics"
+      ],
+      "explanation": "AARR uses accounting income; a common modification divides by average investment to reflect capital recovery via depreciation."
+    }
+  ]
+}

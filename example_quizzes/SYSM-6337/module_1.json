@@ -1,0 +1,430 @@
+{
+  "template_info": {
+    "version": "1.0",
+    "description": "Managerial Accounting (Module 1) Quiz: mix of multiple-choice and fill-in-the-blank.",
+    "supported_types": [
+      "multiple_choice",
+      "fill_blank"
+    ],
+    "instructions": "Replace the example questions with your own content. Ensure all required fields are present."
+  },
+  "questions": [
+    {
+      "question": "Which of the following is NOT one of the core management activities?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Directing",
+        "Decision making",
+        "Planning",
+        "Auditing"
+      ],
+      "correct_answer": "Auditing",
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "management functions",
+        "module1"
+      ],
+      "explanation": "The four activities emphasized are Directing, Decision making, Planning, and Controlling. Auditing is not listed among them."
+    },
+    {
+      "question": "Choosing among alternatives is the {blank} function of management.",
+      "question_type": "fill_blank",
+      "options": [
+        "decision making"
+      ],
+      "correct_answer": "decision making",
+      "acceptable_answers": [
+        "decision-making",
+        "decisionmaking",
+        "Decision making",
+        "Decision-making"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "management functions",
+        "module1"
+      ],
+      "explanation": "Decision making is selecting among alternatives."
+    },
+    {
+      "question": "Setting goals and budgets to guide operations is called {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "planning"
+      ],
+      "correct_answer": "planning",
+      "acceptable_answers": [
+        "Planning"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "management functions",
+        "module1"
+      ],
+      "explanation": "Planning sets objectives and outlines how to achieve them."
+    },
+    {
+      "question": "Managerial accounting primarily serves which users?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Internal insiders (executives, managers, operators)",
+        "External investors and creditors only",
+        "The IRS and SEC",
+        "Customers and suppliers only"
+      ],
+      "correct_answer": "Internal insiders (executives, managers, operators)",
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "users",
+        "module1"
+      ],
+      "explanation": "Managerial accounting is for insiders who plan, control, and make decisions."
+    },
+    {
+      "question": "Managerial accounting information is best characterized by which of the following?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Strict adherence to GAAP with historical focus only",
+        "Highly aggregated company-wide information",
+        "Use of estimates to promote relevance and timeliness",
+        "Exclusive focus on external reporting"
+      ],
+      "correct_answer": "Use of estimates to promote relevance and timeliness",
+      "difficulty": "medium",
+      "tags": [
+        "managerial accounting",
+        "information characteristics",
+        "module1"
+      ],
+      "explanation": "It emphasizes relevance and timeliness, often using estimates, with no external regulation beyond value-added considerations."
+    },
+    {
+      "question": "Under the value-added principle, information is produced if its benefit exceeds the {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "cost"
+      ],
+      "correct_answer": "cost",
+      "acceptable_answers": [
+        "costs",
+        "Cost",
+        "Costs"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "managerial accounting",
+        "principles",
+        "module1"
+      ],
+      "explanation": "Managerial accounting is limited by the value-added principle—benefits should exceed costs."
+    },
+    {
+      "question": "Which of the following is a PRODUCT cost?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Sales commissions",
+        "Direct materials",
+        "Advertising expense",
+        "Office admin salaries"
+      ],
+      "correct_answer": "Direct materials",
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "product vs period",
+        "module1"
+      ],
+      "explanation": "Product costs are incurred in manufacturing the product: materials, labor, and manufacturing overhead."
+    },
+    {
+      "question": "Product costs are expensed on the income statement when the products are {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "sold"
+      ],
+      "correct_answer": "sold",
+      "acceptable_answers": [
+        "Sold"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "product vs period",
+        "module1"
+      ],
+      "explanation": "Product costs are inventoried until sale; then they are expensed as COGS."
+    },
+    {
+      "question": "Where do PERIOD costs appear on the income statement?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Above the gross margin line",
+        "Below the gross margin line",
+        "Only in inventory accounts",
+        "Within cost of goods sold"
+      ],
+      "correct_answer": "Below the gross margin line",
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "product vs period",
+        "module1"
+      ],
+      "explanation": "Period costs (selling and administrative) are reported below gross margin."
+    },
+    {
+      "question": "Costs that cannot be traced to specific products are called {blank} costs.",
+      "question_type": "fill_blank",
+      "options": [
+        "indirect"
+      ],
+      "correct_answer": "indirect",
+      "acceptable_answers": [
+        "Indirect",
+        "overhead",
+        "Overhead",
+        "indirect costs",
+        "Indirect costs"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "overhead",
+        "module1"
+      ],
+      "explanation": "Indirect (overhead) costs are not directly traceable to individual products."
+    },
+    {
+      "question": "Which of the following is an INDIRECT manufacturing cost (manufacturing overhead)?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Assembly-line worker wages",
+        "Wood used to build tables",
+        "Factory supervisor’s salary",
+        "Machine operator wages"
+      ],
+      "correct_answer": "Factory supervisor’s salary",
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "overhead",
+        "module1"
+      ],
+      "explanation": "Supervisor salary is not traceable to a specific unit; it is overhead."
+    },
+    {
+      "question": "Machine rent is $240 per 8-hour day. If a chair uses 1 hour, the rental cost allocated to ONE chair is {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "30",
+        "$30"
+      ],
+      "correct_answer": "30",
+      "acceptable_answers": [
+        "30",
+        "30.00",
+        "$30",
+        "$30.00"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "cost allocation",
+        "overhead",
+        "module1"
+      ],
+      "explanation": "Rate = $240/8 = $30 per hour. Chair uses 1 hour → $30."
+    },
+    {
+      "question": "Given the same rental ($240/day for 8 hours), if a table uses 3 hours, the rental cost allocated to ONE table is {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "90",
+        "$90"
+      ],
+      "correct_answer": "90",
+      "acceptable_answers": [
+        "90",
+        "90.00",
+        "$90",
+        "$90.00"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "cost allocation",
+        "overhead",
+        "module1"
+      ],
+      "explanation": "Rate = $30 per hour. Table uses 3 hours → $90."
+    },
+    {
+      "question": "Prime cost is the sum of which two components?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Direct materials + Direct labor",
+        "Direct labor + Manufacturing overhead",
+        "Direct materials + Manufacturing overhead",
+        "Direct materials + Direct labor + Manufacturing overhead"
+      ],
+      "correct_answer": "Direct materials + Direct labor",
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "prime cost",
+        "module1"
+      ],
+      "explanation": "Prime cost = Direct materials + Direct labor."
+    },
+    {
+      "question": "Conversion cost is the sum of which two components?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Direct materials + Direct labor",
+        "Direct labor + Manufacturing overhead",
+        "Direct materials + Manufacturing overhead",
+        "Direct materials + Direct labor + Manufacturing overhead"
+      ],
+      "correct_answer": "Direct labor + Manufacturing overhead",
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "conversion cost",
+        "module1"
+      ],
+      "explanation": "Conversion cost = Direct labor + Manufacturing overhead."
+    },
+    {
+      "question": "Upstream costs occur {blank} the manufacturing process begins.",
+      "question_type": "fill_blank",
+      "options": [
+        "before"
+      ],
+      "correct_answer": "before",
+      "acceptable_answers": [
+        "Before"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "upstream downstream",
+        "module1"
+      ],
+      "explanation": "Upstream costs are incurred before production starts."
+    },
+    {
+      "question": "In merchandising firms, most labor and overhead costs tied to selling goods are classified as:",
+      "question_type": "multiple_choice",
+      "options": [
+        "Cost of goods sold",
+        "Manufacturing overhead",
+        "Direct labor",
+        "Selling and general administrative expenses"
+      ],
+      "correct_answer": "Selling and general administrative expenses",
+      "difficulty": "medium",
+      "tags": [
+        "non-manufacturing",
+        "SG&A",
+        "module1"
+      ],
+      "explanation": "Selling-related costs are recorded as SG&A for merchandising firms."
+    },
+    {
+      "question": "Just-in-Time (JIT) primarily aims to reduce {blank} costs while meeting customer demand on time.",
+      "question_type": "fill_blank",
+      "options": [
+        "inventory holding"
+      ],
+      "correct_answer": "inventory holding",
+      "acceptable_answers": [
+        "inventory holding",
+        "inventory carrying",
+        "carrying",
+        "holding"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "JIT",
+        "operations",
+        "module1"
+      ],
+      "explanation": "JIT reduces nonvalue-added inventory holding (carrying) costs."
+    },
+    {
+      "question": "Which is a potential ethical pressure faced by management accountants?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Pressure to bias or issue incomplete reports",
+        "Pressure to file taxes earlier",
+        "Pressure to price products lower than competitors",
+        "Pressure to hire more staff"
+      ],
+      "correct_answer": "Pressure to bias or issue incomplete reports",
+      "difficulty": "medium",
+      "tags": [
+        "ethics",
+        "module1"
+      ],
+      "explanation": "Possible conflicts include pressures to compromise integrity or issue biased/misleading reports."
+    },
+    {
+      "question": "Which of the following is an emerging trend in managerial accounting?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Balanced Scorecard",
+        "FIFO inventory method",
+        "LIFO inventory method",
+        "Cash-basis bookkeeping"
+      ],
+      "correct_answer": "Balanced Scorecard",
+      "difficulty": "easy",
+      "tags": [
+        "trends",
+        "balanced scorecard",
+        "module1"
+      ],
+      "explanation": "Balanced Scorecard is listed among emerging/modern practices."
+    },
+    {
+      "question": "Activity-Based Costing is often paired with {blank} to use cost insights for improving processes.",
+      "question_type": "fill_blank",
+      "options": [
+        "Activity-Based Management"
+      ],
+      "correct_answer": "Activity-Based Management",
+      "acceptable_answers": [
+        "activity-based management",
+        "ABM"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "trends",
+        "ABC",
+        "ABM",
+        "module1"
+      ],
+      "explanation": "ABC identifies cost drivers; ABM uses that information to manage activities."
+    },
+    {
+      "question": "Costs that occur after the manufacturing process begins are referred to as {blank} costs.",
+      "question_type": "fill_blank",
+      "options": [
+        "downstream"
+      ],
+      "correct_answer": "downstream",
+      "acceptable_answers": [
+        "Downstream"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "costs",
+        "upstream downstream",
+        "module1"
+      ],
+      "explanation": "Downstream costs are incurred after production starts."
+    }
+  ]
+}

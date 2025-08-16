@@ -1,0 +1,297 @@
+{
+  "template_info": {
+    "version": "1.0",
+    "description": "Module 3 quiz: Cost Accumulation, Tracing, and Allocation (mix of multiple choice and fill-in-the-blank).",
+    "supported_types": [
+      "multiple_choice",
+      "fill_blank"
+    ],
+    "instructions": "Replace the example questions with your own content. Ensure all required fields are present."
+  },
+  "questions": [
+    {
+      "question": "A cost object is anything for which a measurement of {blank} is desired.",
+      "question_type": "fill_blank",
+      "options": [
+        "costs",
+        "cost"
+      ],
+      "correct_answer": "costs",
+      "acceptable_answers": [
+        "costs",
+        "cost"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "cost object",
+        "definitions",
+        "managerial accounting"
+      ],
+      "explanation": "A cost object is any item (product, service, customer, project) for which we want to measure costs."
+    },
+    {
+      "question": "Which sequence describes the typical two-step approach for determining the cost of a cost object?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Cost accumulation → Cost assignment",
+        "Cost assignment → Cost accumulation",
+        "Cost allocation → Cost accumulation",
+        "Cost tracing → Cost pooling"
+      ],
+      "correct_answer": "Cost accumulation → Cost assignment",
+      "difficulty": "easy",
+      "tags": [
+        "cost accumulation",
+        "cost assignment",
+        "process"
+      ],
+      "explanation": "We first collect (accumulate) costs, then assign them to cost objects via tracing or allocation."
+    },
+    {
+      "question": "Cost accumulation is the collection of {blank} by the costing system.",
+      "question_type": "fill_blank",
+      "options": [
+        "cost data",
+        "cost information",
+        "costs data"
+      ],
+      "correct_answer": "cost data",
+      "acceptable_answers": [
+        "cost data",
+        "cost information"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "cost accumulation",
+        "definitions"
+      ],
+      "explanation": "Cost accumulation refers to gathering the cost data needed before assignment."
+    },
+    {
+      "question": "Which statement is TRUE about direct vs. indirect costs?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Direct costs can be easily traced to a specific cost object.",
+        "Indirect costs can be easily and economically traced to a specific cost object.",
+        "All manufacturing costs are direct costs of the product.",
+        "Whether a cost is direct or indirect never depends on cost–benefit considerations."
+      ],
+      "correct_answer": "Direct costs can be easily traced to a specific cost object.",
+      "difficulty": "medium",
+      "tags": [
+        "direct costs",
+        "indirect costs",
+        "tracing"
+      ],
+      "explanation": "Direct costs are economically traceable to a cost object; indirect costs cannot be easily or economically traced."
+    },
+    {
+      "question": "When selecting a cost allocation driver for a common (indirect) cost pool, which criterion should carry the MOST weight?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Strength of the cause-and-effect relationship between the cost and the driver",
+        "The driver that produces the highest product cost",
+        "The driver most commonly used in the industry",
+        "The driver with the smallest numerical value"
+      ],
+      "correct_answer": "Strength of the cause-and-effect relationship between the cost and the driver",
+      "difficulty": "medium",
+      "tags": [
+        "allocation base",
+        "drivers",
+        "cost allocation"
+      ],
+      "explanation": "The best driver reflects a strong causal link to the cost being allocated; convenience alone is not sufficient."
+    },
+    {
+      "question": "Watches R Us makes 1,000 watches (4 machine hours per unit) and 3,000 clocks (2 machine hours per unit). Annual machine depreciation is $10,000. The cost allocation rate per machine hour is:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$0.50 per MH",
+        "$1.00 per MH",
+        "$2.00 per MH",
+        "$2.50 per MH"
+      ],
+      "correct_answer": "$1.00 per MH",
+      "difficulty": "medium",
+      "tags": [
+        "numerical",
+        "overhead rate",
+        "machine hours",
+        "cost allocation"
+      ],
+      "explanation": "Total MH = 1,000×4 + 3,000×2 = 10,000 MH. Rate = $10,000 ÷ 10,000 MH = $1 per MH."
+    },
+    {
+      "question": "Using the rate above, the overhead allocated per UNIT to a watch is:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$2",
+        "$3",
+        "$4",
+        "$6"
+      ],
+      "correct_answer": "$4",
+      "difficulty": "easy",
+      "tags": [
+        "numerical",
+        "unit overhead",
+        "cost allocation"
+      ],
+      "explanation": "Each watch uses 4 MH × $1/MH = $4 of allocated overhead."
+    },
+    {
+      "question": "Using the same information, the TOTAL annual overhead allocated to clocks is:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$4,000",
+        "$6,000",
+        "$8,000",
+        "$10,000"
+      ],
+      "correct_answer": "$6,000",
+      "difficulty": "easy",
+      "tags": [
+        "numerical",
+        "total overhead",
+        "cost allocation"
+      ],
+      "explanation": "Clocks use 3,000 units × 2 MH × $1/MH = 6,000 MH → $6,000 total."
+    },
+    {
+      "question": "Pre-determined overhead rate = (budgeted overhead cost) ÷ {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "budgeted volume of cost allocation driver activity",
+        "budgeted activity level",
+        "budgeted driver activity",
+        "budgeted cost driver volume"
+      ],
+      "correct_answer": "budgeted volume of cost allocation driver activity",
+      "acceptable_answers": [
+        "budgeted volume of cost allocation driver activity",
+        "budgeted activity level",
+        "budgeted driver activity",
+        "budgeted cost driver volume"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "predetermined overhead rate",
+        "formulas"
+      ],
+      "explanation": "The denominator is the budgeted quantity of the chosen allocation base (driver)."
+    },
+    {
+      "question": "We use a predetermined allocation rate because we need cost information in a {blank} manner.",
+      "question_type": "fill_blank",
+      "options": [
+        "timely",
+        "timely fashion",
+        "timely manner"
+      ],
+      "correct_answer": "timely",
+      "acceptable_answers": [
+        "timely",
+        "timely fashion",
+        "timely manner"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "timeliness",
+        "predetermined rate",
+        "managerial accounting"
+      ],
+      "explanation": "Waiting for actuals would delay decisions; a predetermined rate provides timely estimates."
+    },
+    {
+      "question": "Which statement about cost pools is TRUE?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Cost pools group indirect costs that share a common cost driver.",
+        "Cost pools are used only for direct material costs.",
+        "Cost pools eliminate the need for allocation bases.",
+        "Cost pools are only used in service organizations."
+      ],
+      "correct_answer": "Cost pools group indirect costs that share a common cost driver.",
+      "difficulty": "easy",
+      "tags": [
+        "cost pools",
+        "indirect costs",
+        "allocation base"
+      ],
+      "explanation": "A cost pool accumulates similar indirect costs linked to the same driver to simplify allocation."
+    },
+    {
+      "question": "In a highly automated environment, using direct labor hours as the sole allocation base is problematic mainly because:",
+      "question_type": "multiple_choice",
+      "options": [
+        "Labor hours are difficult to measure.",
+        "Labor is a small share of production effort, so labor-based allocation can distort product costs.",
+        "It will under-allocate overhead to labor-intensive products.",
+        "It violates GAAP."
+      ],
+      "correct_answer": "Labor is a small share of production effort, so labor-based allocation can distort product costs.",
+      "difficulty": "medium",
+      "tags": [
+        "traditional costing",
+        "automation",
+        "allocation base"
+      ],
+      "explanation": "When labor is not the main driver of overhead, labor-based rates often misstate product costs."
+    },
+    {
+      "question": "ABC cost hierarchy includes Unit-level, Batch-level, {blank}-level, and Facility-level activities.",
+      "question_type": "fill_blank",
+      "options": [
+        "Product"
+      ],
+      "correct_answer": "Product",
+      "acceptable_answers": [
+        "Product",
+        "product"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "ABC",
+        "cost hierarchy"
+      ],
+      "explanation": "The four levels are unit-level, batch-level, product-level, and facility-level."
+    },
+    {
+      "question": "Which of the following is a BATCH-level activity?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Machine setup performed once per batch",
+        "Drilling a hole in each unit",
+        "Designing the product",
+        "Factory security"
+      ],
+      "correct_answer": "Machine setup performed once per batch",
+      "difficulty": "medium",
+      "tags": [
+        "ABC",
+        "cost hierarchy",
+        "examples"
+      ],
+      "explanation": "Setup activities are triggered by the batch, not by individual units or by the entire facility."
+    },
+    {
+      "question": "Which is NOT typically a use of Activity-Based Management (ABM)?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Pricing and product mix decisions",
+        "Continuous process improvement and cost reduction",
+        "Preparing external GAAP financial statements",
+        "Customer profitability analysis"
+      ],
+      "correct_answer": "Preparing external GAAP financial statements",
+      "difficulty": "medium",
+      "tags": [
+        "ABM",
+        "uses",
+        "profitability"
+      ],
+      "explanation": "ABM informs internal decisions like pricing, improvement, and profitability; external reporting follows GAAP."
+    }
+  ]
+}

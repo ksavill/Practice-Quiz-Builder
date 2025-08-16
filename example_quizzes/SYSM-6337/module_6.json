@@ -1,0 +1,501 @@
+{
+  "template_info": {
+    "version": "1.0",
+    "description": "Question template for AI generation or manual creation",
+    "supported_types": [
+      "multiple_choice",
+      "fill_blank"
+    ],
+    "instructions": "Replace the example questions with your own content. Ensure all required fields are present."
+  },
+  "questions": [
+    {
+      "question": "Decentralization in an organization primarily refers to the {blank} of decision-making authority to lower levels.",
+      "question_type": "fill_blank",
+      "options": [
+        "delegation",
+        "delegation of decision-making",
+        "delegation of authority"
+      ],
+      "correct_answer": "delegation",
+      "acceptable_answers": [
+        "delegation",
+        "delegation of decision-making",
+        "delegation of authority"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "performance evaluation",
+        "decentralization"
+      ],
+      "explanation": "Decentralization is the delegation of freedom to make decisions to lower levels in the organization."
+    },
+    {
+      "question": "Which of the following is NOT a benefit of decentralization?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Timely decisions and quick reaction to competitors",
+        "Leadership continuity",
+        "Empowers employees",
+        "Duplication of services"
+      ],
+      "correct_answer": "Duplication of services",
+      "difficulty": "easy",
+      "tags": [
+        "decentralization",
+        "benefits",
+        "costs"
+      ],
+      "explanation": "Duplication of services is a cost of decentralization, not a benefit."
+    },
+    {
+      "question": "The lower in the organization the freedom to decide exists, the greater the {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "decentralization",
+        "degree of decentralization"
+      ],
+      "correct_answer": "decentralization",
+      "acceptable_answers": [
+        "decentralization",
+        "degree of decentralization"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "decentralization"
+      ],
+      "explanation": "Greater decision freedom at lower levels increases decentralization."
+    },
+    {
+      "question": "A responsibility center in which the manager is responsible only for the cost of activities with well-defined input-output relationships is called a:",
+      "question_type": "multiple_choice",
+      "options": [
+        "Discretionary cost center",
+        "Revenue center",
+        "Profit center",
+        "Cost center"
+      ],
+      "correct_answer": "Cost center",
+      "difficulty": "medium",
+      "tags": [
+        "responsibility accounting",
+        "responsibility centers"
+      ],
+      "explanation": "Cost centers have well-defined input-output relationships and managers are responsible for costs."
+    },
+    {
+      "question": "Which type of responsibility center is characterized by inputs and outputs that are NOT well specified, with the manager still responsible for costs?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Discretionary cost center",
+        "Revenue center",
+        "Profit center",
+        "Investment center"
+      ],
+      "correct_answer": "Discretionary cost center",
+      "difficulty": "medium",
+      "tags": [
+        "responsibility centers",
+        "costs"
+      ],
+      "explanation": "Discretionary cost centers (e.g., R&D, HR) lack clear input-output relationships."
+    },
+    {
+      "question": "In which responsibility center is the manager responsible for both profit and the invested capital that generates that profit?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Revenue center",
+        "Profit center",
+        "Investment center",
+        "Cost center"
+      ],
+      "correct_answer": "Investment center",
+      "difficulty": "easy",
+      "tags": [
+        "responsibility centers",
+        "investment center"
+      ],
+      "explanation": "Investment center managers are accountable for profit and invested capital."
+    },
+    {
+      "question": "According to the controllability concept, managers should be evaluated only on {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "revenues or costs they control",
+        "controllable items",
+        "controllable revenues and costs"
+      ],
+      "correct_answer": "revenues or costs they control",
+      "acceptable_answers": [
+        "revenues or costs they control",
+        "controllable items",
+        "controllable revenues and costs"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "controllability",
+        "performance evaluation"
+      ],
+      "explanation": "Managers are usually held responsible for items over which they have predominant control."
+    },
+    {
+      "question": "Which is NOT a recommended feature of responsibility reports?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Be timely",
+        "Be issued regularly",
+        "Be understandable",
+        "Include noncontrollable items for evaluation"
+      ],
+      "correct_answer": "Include noncontrollable items for evaluation",
+      "difficulty": "medium",
+      "tags": [
+        "responsibility reporting",
+        "controllability"
+      ],
+      "explanation": "Reports should focus on controllable items and compare budgeted vs. actual amounts."
+    },
+    {
+      "question": "The difference between actual results and a budgeted amount used as a benchmark is called a(n):",
+      "question_type": "multiple_choice",
+      "options": [
+        "margin",
+        "turnover",
+        "variance",
+        "residual"
+      ],
+      "correct_answer": "variance",
+      "difficulty": "easy",
+      "tags": [
+        "budgets",
+        "variance"
+      ],
+      "explanation": "Budgets provide benchmarks; deviations are variances."
+    },
+    {
+      "question": "A {blank} budget adjusts for changes in sales volume and other cost-driver activities.",
+      "question_type": "fill_blank",
+      "options": [
+        "flexible",
+        "flexible budget"
+      ],
+      "correct_answer": "flexible",
+      "acceptable_answers": [
+        "flexible",
+        "flexible budget"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "budgets",
+        "flexible budget"
+      ],
+      "explanation": "Static budgets are for a single volume; flexible budgets adjust for volume changes."
+    },
+    {
+      "question": "The sales volume variance of profits is the difference in profit between the static budget and the {blank} budget.",
+      "question_type": "fill_blank",
+      "options": [
+        "flexible",
+        "flexible budget"
+      ],
+      "correct_answer": "flexible",
+      "acceptable_answers": [
+        "flexible",
+        "flexible budget"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "variances",
+        "sales volume variance"
+      ],
+      "explanation": "Sales volume variance isolates the impact of volume changes."
+    },
+    {
+      "question": "The flexible budget variance of profits is the difference in profit between {blank} and the flexible budget.",
+      "question_type": "fill_blank",
+      "options": [
+        "actual results",
+        "actual profit"
+      ],
+      "correct_answer": "actual results",
+      "acceptable_answers": [
+        "actual results",
+        "actual profit",
+        "actual"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "variances",
+        "flexible budget variance"
+      ],
+      "explanation": "Flexible budget variance measures the difference between actual and flexible-budget amounts."
+    },
+    {
+      "question": "For cost items, the variance is computed as:",
+      "question_type": "multiple_choice",
+      "options": [
+        "Actual cost − Benchmark cost",
+        "Benchmark cost − Actual cost",
+        "Actual revenue − Benchmark revenue",
+        "Benchmark revenue − Actual revenue"
+      ],
+      "correct_answer": "Benchmark cost − Actual cost",
+      "difficulty": "medium",
+      "tags": [
+        "variance",
+        "costs"
+      ],
+      "explanation": "For cost items, actual cost is subtracted from the benchmark (budgeted) cost."
+    },
+    {
+      "question": "The fixed cost variance (also called the spending variance) is the difference between:",
+      "question_type": "multiple_choice",
+      "options": [
+        "Actual fixed costs and budgeted fixed costs",
+        "Budgeted fixed costs and actual fixed costs",
+        "Actual variable costs and budgeted variable costs",
+        "Flexible-budget revenue and actual revenue"
+      ],
+      "correct_answer": "Budgeted fixed costs and actual fixed costs",
+      "difficulty": "easy",
+      "tags": [
+        "variance",
+        "fixed costs"
+      ],
+      "explanation": "Spending variance for fixed costs = budgeted fixed costs − actual fixed costs."
+    },
+    {
+      "question": "Which variance is most useful for assessing operational efficiency?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Static budget variance",
+        "Flexible budget variance",
+        "Sales volume variance",
+        "Total profit variance"
+      ],
+      "correct_answer": "Flexible budget variance",
+      "difficulty": "medium",
+      "tags": [
+        "variances",
+        "efficiency"
+      ],
+      "explanation": "Static budget variances have limited use for efficiency; flexible budget variance isolates efficiency."
+    },
+    {
+      "question": "Return on Investment (ROI) can be decomposed as (choose the correct identity):",
+      "question_type": "multiple_choice",
+      "options": [
+        "ROI = Sales Revenue / Income × Invested Capital",
+        "ROI = Income / Invested Capital × Sales Revenue",
+        "ROI = (Income / Sales Revenue) × (Sales Revenue / Invested Capital)",
+        "ROI = (Sales Revenue / Income) × (Invested Capital / Sales Revenue)"
+      ],
+      "correct_answer": "ROI = (Income / Sales Revenue) × (Sales Revenue / Invested Capital)",
+      "difficulty": "medium",
+      "tags": [
+        "ROI",
+        "investment centers"
+      ],
+      "explanation": "ROI equals margin (Income/Sales) times turnover (Sales/Invested Capital)."
+    },
+    {
+      "question": "One way to improve ROI is to {blank} invested capital (holding other factors constant).",
+      "question_type": "fill_blank",
+      "options": [
+        "lower",
+        "reduce",
+        "decrease"
+      ],
+      "correct_answer": "lower",
+      "acceptable_answers": [
+        "lower",
+        "reduce",
+        "decrease"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "ROI",
+        "performance improvement"
+      ],
+      "explanation": "Improving ROI can be achieved by increasing prices, decreasing expenses, or lowering invested capital."
+    },
+    {
+      "question": "A drawback of ROI-based evaluation is that a manager may reject a project with ROI below the division's current ROI even if it exceeds the company's required rate of return.",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [
+        "ROI",
+        "incentives",
+        "behavior"
+      ],
+      "explanation": "Managers paid on ROI may avoid projects that lower their average ROI despite positive value."
+    },
+    {
+      "question": "Residual income (RI) is calculated as investment center profit minus the {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "investment charge",
+        "capital charge"
+      ],
+      "correct_answer": "investment charge",
+      "acceptable_answers": [
+        "investment charge",
+        "capital charge"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "residual income",
+        "investment centers"
+      ],
+      "explanation": "Investment charge = Investment capital × imputed interest rate."
+    },
+    {
+      "question": "For a $100,000 project with $25,000 profit and a 20% required rate of return, the residual income (RI) is:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$0",
+        "$5,000",
+        "$20,000",
+        "$25,000"
+      ],
+      "correct_answer": "$5,000",
+      "difficulty": "medium",
+      "tags": [
+        "residual income",
+        "calculations"
+      ],
+      "explanation": "Investment charge = $100,000 × 20% = $20,000; RI = $25,000 − $20,000 = $5,000."
+    },
+    {
+      "question": "Which of the following is NOT among the three issues to consider when measuring investment capital?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Beginning vs. end-of-period vs. average balance",
+        "Historical cost vs. current cost",
+        "Gross vs. net value",
+        "Choice of tax depreciation method for IRS compliance"
+      ],
+      "correct_answer": "Choice of tax depreciation method for IRS compliance",
+      "difficulty": "medium",
+      "tags": [
+        "investment capital measurement"
+      ],
+      "explanation": "The three issues are timing of measurement, valuation basis, and gross vs. net value."
+    },
+    {
+      "question": "Economic Value Added (EVA) equals after-tax operating income minus the {blank} at the weighted average cost of capital.",
+      "question_type": "fill_blank",
+      "options": [
+        "investment charge",
+        "capital charge"
+      ],
+      "correct_answer": "investment charge",
+      "acceptable_answers": [
+        "investment charge",
+        "capital charge"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "EVA",
+        "value creation"
+      ],
+      "explanation": "EVA = After-tax operating income − (Capital × WACC)."
+    },
+    {
+      "question": "Which expression correctly represents the investment charge used in EVA?",
+      "question_type": "multiple_choice",
+      "options": [
+        "(Total assets − Current liabilities) × WACC",
+        "(Market value of equity − Market value of debt) × Cost of equity",
+        "After-tax operating income × WACC",
+        "Sales revenue × WACC"
+      ],
+      "correct_answer": "(Total assets − Current liabilities) × WACC",
+      "difficulty": "medium",
+      "tags": [
+        "EVA",
+        "WACC"
+      ],
+      "explanation": "Capital for EVA is typically total assets minus current liabilities (i.e., net assets) times WACC."
+    },
+    {
+      "question": "The balanced scorecard translates strategy into measures across four perspectives: financial, customer, internal business process, and {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "learning and growth",
+        "learning & growth"
+      ],
+      "correct_answer": "learning and growth",
+      "acceptable_answers": [
+        "learning and growth",
+        "learning & growth"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "balanced scorecard"
+      ],
+      "explanation": "The four perspectives are financial, customer, internal business process, and learning & growth."
+    },
+    {
+      "question": "Which of the following is a key measure under the customer perspective?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Net income",
+        "Customer retention",
+        "Throughput time",
+        "Employee productivity"
+      ],
+      "correct_answer": "Customer retention",
+      "difficulty": "easy",
+      "tags": [
+        "balanced scorecard",
+        "customer perspective"
+      ],
+      "explanation": "Customer retention, satisfaction, market share, and profitability are common customer metrics."
+    },
+    {
+      "question": "The internal business process perspective asks: 'At what business practices must we {blank}?'",
+      "question_type": "fill_blank",
+      "options": [
+        "excel",
+        "perform exceptionally",
+        "be excellent"
+      ],
+      "correct_answer": "excel",
+      "acceptable_answers": [
+        "excel",
+        "perform exceptionally",
+        "be excellent"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "balanced scorecard",
+        "internal processes"
+      ],
+      "explanation": "The internal perspective focuses on key processes where the organization must excel."
+    },
+    {
+      "question": "A learning and growth perspective metric would MOST likely be:",
+      "question_type": "multiple_choice",
+      "options": [
+        "Return on investment",
+        "Market share",
+        "Employee satisfaction",
+        "Sales price variance"
+      ],
+      "correct_answer": "Employee satisfaction",
+      "difficulty": "easy",
+      "tags": [
+        "balanced scorecard",
+        "learning and growth"
+      ],
+      "explanation": "Learning and growth emphasizes employee capabilities, satisfaction, retention, and productivity."
+    }
+  ]
+}

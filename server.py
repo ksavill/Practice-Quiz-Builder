@@ -5,9 +5,9 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List
 import os
+import json
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Text, select
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship, Session
+from sqlalchemy.orm import declarative_base, sessionmaker, relationship, Session
 from quiz_validator import validate_quiz, Quiz, Question
 
 app = FastAPI()
@@ -47,7 +47,7 @@ class QuestionDB(Base):
     id = Column(Integer, primary_key=True, index=True)
     question = Column(Text, nullable=False)
     question_type = Column(String, nullable=False, default="multiple_choice")
-    options = Column(Text, nullable=False)  # Storing options as comma-separated string
+    options = Column(Text, nullable=False)  # JSON-encoded list of options or acceptable answers
     correct_answer = Column(String, nullable=False)
     quiz_id = Column(Integer, ForeignKey("quizzes.id"))
 
@@ -59,11 +59,11 @@ class QuestionBankDB(Base):
     id = Column(Integer, primary_key=True, index=True)
     question = Column(Text, nullable=False)
     question_type = Column(String, nullable=False, default="multiple_choice")
-    options = Column(Text, nullable=False)  # Storing options as comma-separated string
+    options = Column(Text, nullable=False)  # JSON-encoded list of options or acceptable answers
     correct_answer = Column(String, nullable=False)
     class_id = Column(Integer, ForeignKey("classes.id"), nullable=False)
     difficulty = Column(String, nullable=True)  # easy, medium, hard
-    tags = Column(Text, nullable=True)  # comma-separated tags
+    tags = Column(Text, nullable=True)  # JSON-encoded list of tags
     created_at = Column(String, nullable=True)  # timestamp
 
     class_ref = relationship("ClassDB")
@@ -372,7 +372,7 @@ async def edit_quiz(request: Request, quiz_id: int, db: Session = Depends(get_db
             {
                 "question": q.question,
                 "question_type": q.question_type,
-                "options": q.options.split(","),
+                "options": json.loads(q.options),
                 "correct_answer": q.correct_answer
             } for q in quiz.questions
         ]
@@ -463,12 +463,12 @@ async def get_question_bank(class_id: int = None, db: Session = Depends(get_db))
         "id": q.id,
         "question": q.question,
         "question_type": q.question_type,
-        "options": q.options.split(","),
+        "options": json.loads(q.options),
         "correct_answer": q.correct_answer,
         "class_id": q.class_id,
         "class_name": q.class_ref.name,
         "difficulty": q.difficulty,
-        "tags": q.tags.split(",") if q.tags else [],
+        "tags": json.loads(q.tags) if q.tags else [],
         "created_at": q.created_at
     } for q in questions]
 
@@ -484,11 +484,11 @@ async def add_to_question_bank(question: QuestionBankModel, db: Session = Depend
     db_question = QuestionBankDB(
         question=question.question,
         question_type=question.question_type,
-        options=",".join(question.options),
+        options=json.dumps(question.options),
         correct_answer=question.correct_answer,
         class_id=question.class_id,
         difficulty=question.difficulty,
-        tags=question.tags,
+        tags=json.dumps([t.strip() for t in question.tags.split(",") if t.strip()]) if question.tags else json.dumps([]),
         created_at=datetime.now().isoformat()
     )
     db.add(db_question)
@@ -506,11 +506,11 @@ async def get_question_bank_item(question_id: int, db: Session = Depends(get_db)
         "id": question.id,
         "question": question.question,
         "question_type": question.question_type,
-        "options": question.options.split(","),
+        "options": json.loads(question.options),
         "correct_answer": question.correct_answer,
         "class_id": question.class_id,
         "difficulty": question.difficulty,
-        "tags": question.tags.split(",") if question.tags else []
+        "tags": json.loads(question.tags) if question.tags else []
     }
 
 @app.put("/api/question-bank/{question_id}")
@@ -526,11 +526,11 @@ async def update_question_bank_item(question_id: int, question: QuestionBankMode
     
     db_question.question = question.question
     db_question.question_type = question.question_type
-    db_question.options = ",".join(question.options)
+    db_question.options = json.dumps(question.options)
     db_question.correct_answer = question.correct_answer
     db_question.class_id = question.class_id
     db_question.difficulty = question.difficulty
-    db_question.tags = question.tags
+    db_question.tags = json.dumps([t.strip() for t in question.tags.split(",") if t.strip()]) if question.tags else json.dumps([])
     
     db.commit()
     return {"question_id": db_question.id}
@@ -576,7 +576,7 @@ async def generate_quiz_from_bank(
     return [{
         "question": q.question,
         "question_type": q.question_type,
-        "options": q.options.split(","),
+        "options": json.loads(q.options),
         "correct_answer": q.correct_answer
     } for q in selected_questions]
 
@@ -971,7 +971,7 @@ Return a valid JSON array with the exact structure specified in the system promp
                     "options": options,
                     "correct_answer": correct_answer,
                     "difficulty": q_data.get("difficulty", request.difficulty_preference),
-                    "tags": ",".join(q_data.get("tags", [])),
+                    "tags": q_data.get("tags", []),
                     "explanation": q_data.get("explanation", "")
                 }
             
@@ -1009,9 +1009,9 @@ async def add_ai_questions_to_bank(request_data: dict, db: Session = Depends(get
         try:
             # Handle different question types
             if q_data.get("question_type") == "fill_blank":
-                options_str = "|".join(q_data.get("acceptable_answers", [q_data.get("correct_answer", "")]))
+                options_str = json.dumps(q_data.get("acceptable_answers", [q_data.get("correct_answer", "")]))
             else:
-                options_str = ",".join(q_data.get("options", []))
+                options_str = json.dumps(q_data.get("options", []))
             
             db_question = QuestionBankDB(
                 question=q_data.get("question", ""),
@@ -1020,7 +1020,7 @@ async def add_ai_questions_to_bank(request_data: dict, db: Session = Depends(get
                 correct_answer=q_data.get("correct_answer", ""),
                 class_id=class_id,
                 difficulty=q_data.get("difficulty", "medium"),
-                tags=q_data.get("tags", ""),
+                tags=json.dumps(q_data.get("tags", [])),
                 created_at=datetime.now().isoformat()
             )
             
@@ -1199,8 +1199,12 @@ async def export_quiz_as_json(quiz_id: int, db: Session = Depends(get_db)):
     exported_questions = []
     
     for question in quiz.questions:
-        # Parse options (stored as comma-separated string)
-        options = [opt.strip() for opt in question.options.split(',') if opt.strip()]
+        # Parse options (stored as JSON-encoded list)
+        try:
+            raw_options = json.loads(question.options)
+        except Exception:
+            raw_options = []
+        options = [opt.strip() for opt in raw_options if isinstance(opt, str) and opt.strip()]
         
         # Build the question object
         question_obj = {
@@ -1411,7 +1415,7 @@ async def create_quiz(quiz: QuizModel, db: Session = Depends(get_db)):
         db_question = QuestionDB(
             question=q.question,
             question_type=q.question_type,
-            options=",".join(q.options),
+            options=json.dumps(q.options),
             correct_answer=q.correct_answer,
             quiz_id=db_quiz.id
         )
@@ -1433,7 +1437,7 @@ async def quiz_questions(quiz_id: int, db: Session = Depends(get_db)):
             {
                 "question": q.question,
                 "question_type": q.question_type,
-                "options": q.options.split(","),
+                "options": json.loads(q.options),
                 "correct_answer": q.correct_answer
             } for q in quiz.questions
         ]
@@ -1465,7 +1469,7 @@ async def update_quiz(quiz_id: int, quiz: QuizModel, db: Session = Depends(get_d
         db_question = QuestionDB(
             question=q.question,
             question_type=q.question_type,
-            options=",".join(q.options),
+            options=json.dumps(q.options),
             correct_answer=q.correct_answer,
             quiz_id=db_quiz.id
         )

@@ -1,0 +1,302 @@
+{
+  "template_info": {
+    "version": "1.0",
+    "description": "Question template for AI generation or manual creation",
+    "supported_types": [
+      "multiple_choice",
+      "fill_blank"
+    ],
+    "instructions": "Replace the example questions with your own content. Ensure all required fields are present."
+  },
+  "questions": [
+    {
+      "question": "Cost-Volume-Profit (CVP) analysis primarily studies the effects of changes in output volume on which of the following?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Only production costs",
+        "Only sales revenue",
+        "Sales revenue, costs, and net income",
+        "Only income taxes"
+      ],
+      "correct_answer": "Sales revenue, costs, and net income",
+      "difficulty": "easy",
+      "tags": [
+        "accounting",
+        "CVP",
+        "Module 2B"
+      ],
+      "explanation": "CVP examines how changes in volume impact revenues, costs (fixed and variable), and profit."
+    },
+    {
+      "question": "Which of the following is NOT typically a CVP driver that managers change to analyze profit impact?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Sales volume",
+        "Selling price per unit",
+        "Unit variable cost",
+        "Accounts receivable collection period"
+      ],
+      "correct_answer": "Accounts receivable collection period",
+      "difficulty": "easy",
+      "tags": [
+        "accounting",
+        "CVP",
+        "drivers",
+        "Module 2B"
+      ],
+      "explanation": "Standard CVP levers are sales volume, price, unit variable cost, fixed costs, and product mix—not AR timing."
+    },
+    {
+      "question": "If selling price per unit P = $50 and variable cost per unit V = $35, the unit contribution margin (UCM) equals:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$10",
+        "$12",
+        "$15",
+        "$85"
+      ],
+      "correct_answer": "$15",
+      "difficulty": "easy",
+      "tags": [
+        "accounting",
+        "contribution margin",
+        "Module 2B"
+      ],
+      "explanation": "UCM = P − V = 50 − 35 = $15."
+    },
+    {
+      "question": "Given P = $50, V = $35, and fixed costs F = $60,000, the breakeven volume in units (BEV) is:",
+      "question_type": "multiple_choice",
+      "options": [
+        "3,000 units",
+        "4,000 units",
+        "6,000 units",
+        "12,000 units"
+      ],
+      "correct_answer": "4,000 units",
+      "difficulty": "medium",
+      "tags": [
+        "accounting",
+        "breakeven",
+        "Module 2B"
+      ],
+      "explanation": "BEV (units) = F / UCM = 60,000 / 15 = 4,000 units."
+    },
+    {
+      "question": "Using the same data (P = $50, V = $35, F = $60,000), the breakeven sales dollars (SBEV) equal:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$120,000",
+        "$150,000",
+        "$200,000",
+        "$600,000"
+      ],
+      "correct_answer": "$200,000",
+      "difficulty": "medium",
+      "tags": [
+        "accounting",
+        "breakeven",
+        "CMR",
+        "Module 2B"
+      ],
+      "explanation": "CMR = (P − V)/P = 15/50 = 0.30. SBEV = F / CMR = 60,000 / 0.30 = $200,000."
+    },
+    {
+      "question": "Fill in the blank: Profit before taxes can be written as {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "N × UCM − F",
+        "N*(P−V) − F",
+        "Revenue × CMR − F",
+        "N*(P-V)-F"
+      ],
+      "correct_answer": "N × UCM − F",
+      "acceptable_answers": [
+        "N × UCM − F",
+        "N*UCM − F",
+        "N*UCM-F",
+        "N × UCM - F",
+        "N*(P−V) − F",
+        "N*(P-V) − F",
+        "N*(P-V)-F",
+        "N×(P−V)−F",
+        "Revenue × CMR − F",
+        "Revenue*CMR − F",
+        "Revenue*CMR-F"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "accounting",
+        "profit equation",
+        "Module 2B"
+      ],
+      "explanation": "Equivalent profit forms: N×(P−V)−F, N×UCM−F, or Revenue×CMR−F."
+    },
+    {
+      "question": "Fill in the blank: The contribution margin ratio (CMR) is defined as {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "(P−V)/P",
+        "UCM/P",
+        "(P - V) / P"
+      ],
+      "correct_answer": "(P−V)/P",
+      "acceptable_answers": [
+        "(P−V)/P",
+        "(P - V)/P",
+        "UCM/P",
+        "Contribution margin divided by price"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "accounting",
+        "CMR",
+        "Module 2B"
+      ],
+      "explanation": "CMR equals the unit contribution margin divided by selling price."
+    },
+    {
+      "question": "Bed-and-breakfast inn: With P = $100, V = $80, and fixed costs F = $30,000, the breakeven volume in guest nights is:",
+      "question_type": "multiple_choice",
+      "options": [
+        "300",
+        "1,000",
+        "1,500",
+        "3,000"
+      ],
+      "correct_answer": "1,500",
+      "difficulty": "easy",
+      "tags": [
+        "accounting",
+        "breakeven",
+        "case",
+        "Module 2B"
+      ],
+      "explanation": "UCM = 100 − 80 = $20. BEV = 30,000 / 20 = 1,500 guest nights."
+    },
+    {
+      "question": "Bed-and-breakfast inn: The breakeven sales dollars (SBEV) for the same case equal:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$30,000",
+        "$75,000",
+        "$120,000",
+        "$150,000"
+      ],
+      "correct_answer": "$150,000",
+      "difficulty": "easy",
+      "tags": [
+        "accounting",
+        "breakeven",
+        "CMR",
+        "Module 2B"
+      ],
+      "explanation": "CMR = (100−80)/100 = 0.20. SBEV = 30,000 / 0.20 = $150,000."
+    },
+    {
+      "question": "Target profit: If P = $40, V = $28, fixed costs F = $120,000, and target profit TP = $60,000, how many units must be sold?",
+      "question_type": "multiple_choice",
+      "options": [
+        "10,000 units",
+        "12,000 units",
+        "15,000 units",
+        "18,000 units"
+      ],
+      "correct_answer": "15,000 units",
+      "difficulty": "medium",
+      "tags": [
+        "accounting",
+        "target profit",
+        "Module 2B"
+      ],
+      "explanation": "UCM = 12; N = (F + TP)/UCM = 180,000/12 = 15,000 units."
+    },
+    {
+      "question": "Target profit: Using the same data (P = $40, V = $28, F = $120,000, TP = $60,000), required sales dollars equal:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$360,000",
+        "$480,000",
+        "$600,000",
+        "$720,000"
+      ],
+      "correct_answer": "$600,000",
+      "difficulty": "medium",
+      "tags": [
+        "accounting",
+        "target profit",
+        "CMR",
+        "Module 2B"
+      ],
+      "explanation": "CMR = 12/40 = 0.30; STP = (F + TP)/CMR = 180,000/0.30 = $600,000."
+    },
+    {
+      "question": "Fill in the blank: Margin of Safety (as a percentage) equals {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "(Budgeted Sales − Break-even Sales) / Budgeted Sales",
+        "1 − (Break-even Sales / Budgeted Sales)",
+        "[(Budgeted − BE) / Budgeted] × 100%"
+      ],
+      "correct_answer": "(Budgeted Sales − Break-even Sales) / Budgeted Sales",
+      "acceptable_answers": [
+        "(Budgeted Sales − Break-even Sales) / Budgeted Sales",
+        "(Budgeted Sales - Break-even Sales) / Budgeted Sales",
+        "1 − (Break-even Sales / Budgeted Sales)",
+        "1 - (Break-even Sales / Budgeted Sales)",
+        "((Budgeted − BE)/Budgeted)",
+        "((Budgeted - BE)/Budgeted)",
+        "((Budgeted Sales − Break-even Sales)/Budgeted Sales) × 100%",
+        "((Budgeted Sales - Break-even Sales)/Budgeted Sales) × 100%"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "accounting",
+        "margin of safety",
+        "Module 2B"
+      ],
+      "explanation": "MoS% measures the cushion between expected sales and BE sales relative to expected sales."
+    },
+    {
+      "question": "At the breakeven point under CVP analysis, which statement is TRUE?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Total revenue is less than total costs.",
+        "Total revenue equals total costs.",
+        "Unit contribution margin equals fixed costs.",
+        "Profit is positive but minimal."
+      ],
+      "correct_answer": "Total revenue equals total costs.",
+      "difficulty": "easy",
+      "tags": [
+        "accounting",
+        "breakeven",
+        "Module 2B"
+      ],
+      "explanation": "By definition, at BE, total revenue = total cost and profit = 0."
+    },
+    {
+      "question": "Fill in the blank: A contribution-margin-format income statement is especially useful for {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "managerial decision-making",
+        "CVP analysis",
+        "short-term decisions"
+      ],
+      "correct_answer": "managerial decision-making",
+      "acceptable_answers": [
+        "managerial decision-making",
+        "CVP analysis",
+        "decision making",
+        "short-term decisions"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "accounting",
+        "contribution income statement",
+        "Module 2B"
+      ],
+      "explanation": "Separating variable and fixed costs highlights contribution margin—useful for decisions and CVP."
+    }
+  ]
+}

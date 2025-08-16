@@ -1,0 +1,303 @@
+{
+  "template_info": {
+    "version": "1.0",
+    "description": "Module 5: Planning for Profit and Cost Control \u2014 quiz generated from provided notes",
+    "supported_types": [
+      "multiple_choice",
+      "fill_blank"
+    ],
+    "instructions": "Replace or extend questions as needed. Ensure all required fields are present."
+  },
+  "questions": [
+    {
+      "question": "Which of the following is NOT one of the three levels of planning?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Strategic planning",
+        "Master budgeting",
+        "Capital budgeting",
+        "Operational risk hedging"
+      ],
+      "correct_answer": "Operational risk hedging",
+      "difficulty": "easy",
+      "tags": [
+        "module5",
+        "planning",
+        "foundations"
+      ],
+      "explanation": "The three levels are strategic planning (long-term), master budget (short-term objectives), and capital budgeting (intermediate-range investment decisions)."
+    },
+    {
+      "question": "A {blank} is a detailed plan, expressed in quantitative terms, that specifies how an organization will acquire and use resources during a particular period of time.",
+      "question_type": "fill_blank",
+      "options": [
+        "budget"
+      ],
+      "correct_answer": "budget",
+      "acceptable_answers": [
+        "budget"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "module5",
+        "definitions"
+      ],
+      "explanation": "A budget quantifies the plan for acquiring and using resources over a defined period."
+    },
+    {
+      "question": "Which statement best describes a budgeting system?",
+      "question_type": "multiple_choice",
+      "options": [
+        "It is the annual financial statements published to shareholders.",
+        "It is the procedures used to develop a budget.",
+        "It is the tax planning process required by law.",
+        "It is a forecast of stock prices."
+      ],
+      "correct_answer": "It is the procedures used to develop a budget.",
+      "difficulty": "easy",
+      "tags": [
+        "module5",
+        "definitions"
+      ],
+      "explanation": "A budgeting system is the set of procedures used to develop a budget."
+    },
+    {
+      "question": "Which of the following is NOT a key purpose of budgeting systems?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Planning",
+        "Facilitating communication and coordination",
+        "Allocating resources",
+        "Maximizing tax refunds"
+      ],
+      "correct_answer": "Maximizing tax refunds",
+      "difficulty": "easy",
+      "tags": [
+        "module5",
+        "purposes"
+      ],
+      "explanation": "Key purposes include planning, communication/coordination, allocating resources, evaluating performance/providing incentives, and managing performance."
+    },
+    {
+      "question": "The cash budget typically includes four major sections. Which option lists them correctly?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Beginning cash balance; Cash receipts; Cash disbursements; Financing; Ending cash balance",
+        "Operating income; Investing income; Financing income; Net cash",
+        "Sales; Production; Direct labor; Overhead",
+        "Assets; Liabilities; Equity; Net cash"
+      ],
+      "correct_answer": "Beginning cash balance; Cash receipts; Cash disbursements; Financing; Ending cash balance",
+      "difficulty": "medium",
+      "tags": [
+        "module5",
+        "cash_budget"
+      ],
+      "explanation": "The cash budget sections are beginning cash balance, cash receipts, cash disbursements, cash needed from or used for financing, and ending cash balance."
+    },
+    {
+      "question": "Using ABC Electric\u2019s forecast, total sales revenue for Year 2 equals:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$19,800,000",
+        "$20,400,000",
+        "$18,600,000",
+        "$21,200,000"
+      ],
+      "correct_answer": "$19,800,000",
+      "difficulty": "medium",
+      "tags": [
+        "module5",
+        "master_budget",
+        "sales_budget"
+      ],
+      "explanation": "Light: 60,000\u00d7$170=$10,200,000; Heavy: 40,000\u00d7$240=$9,600,000; Total=$19,800,000."
+    },
+    {
+      "question": "For Year 2, planned production units for the Light coil equal {blank}. (Use: Production = Sales + Desired ending FG \u2212 Beginning FG)",
+      "question_type": "fill_blank",
+      "options": [
+        "65000",
+        "65,000"
+      ],
+      "correct_answer": "65,000",
+      "acceptable_answers": [
+        "65000",
+        "65,000"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "module5",
+        "master_budget",
+        "production_budget"
+      ],
+      "explanation": "Light production = 60,000 + 25,000 \u2212 20,000 = 65,000 units."
+    },
+    {
+      "question": "For Year 2, planned production units for the Heavy coil equal:",
+      "question_type": "multiple_choice",
+      "options": [
+        "38,000",
+        "40,000",
+        "41,000",
+        "42,000"
+      ],
+      "correct_answer": "41,000",
+      "difficulty": "medium",
+      "tags": [
+        "module5",
+        "master_budget",
+        "production_budget"
+      ],
+      "explanation": "Heavy production = 40,000 + 9,000 \u2212 8,000 = 41,000 units."
+    },
+    {
+      "question": "Given RM standards, the required purchases of sheet metal for Year 2 (in pounds) are:",
+      "question_type": "multiple_choice",
+      "options": [
+        "465,000",
+        "469,000",
+        "471,000",
+        "473,000"
+      ],
+      "correct_answer": "469,000",
+      "difficulty": "hard",
+      "tags": [
+        "module5",
+        "rm_budget"
+      ],
+      "explanation": "Usage = 65,000\u00d74 + 41,000\u00d75 = 465,000 lb; Purchases = 465,000 + 36,000 \u2212 32,000 = 469,000 lb."
+    },
+    {
+      "question": "Total copper wire purchases cost for Year 2 equals {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "$2,560,000",
+        "2560000",
+        "2,560,000"
+      ],
+      "correct_answer": "$2,560,000",
+      "acceptable_answers": [
+        "$2,560,000",
+        "2560000",
+        "2,560,000"
+      ],
+      "difficulty": "hard",
+      "tags": [
+        "module5",
+        "rm_budget"
+      ],
+      "explanation": "Usage = 65,000\u00d72 + 41,000\u00d73 = 253,000 lb; Purchases = 253,000 + 32,000 \u2212 29,000 = 256,000 lb; Cost = 256,000\u00d7$10 = $2,560,000."
+    },
+    {
+      "question": "Total direct labor hours budgeted for Heavy coils in Year 2 are:",
+      "question_type": "multiple_choice",
+      "options": [
+        "240,000",
+        "246,000",
+        "252,000",
+        "260,000"
+      ],
+      "correct_answer": "246,000",
+      "difficulty": "medium",
+      "tags": [
+        "module5",
+        "dl_budget"
+      ],
+      "explanation": "Heavy DLH = 41,000 units \u00d7 6 hours = 246,000 hours."
+    },
+    {
+      "question": "General manufacturing overhead for Year 2 equals {blank}, given $6.00 per direct-labor hour.",
+      "question_type": "fill_blank",
+      "options": [
+        "$3,036,000",
+        "3036000",
+        "3,036,000"
+      ],
+      "correct_answer": "$3,036,000",
+      "acceptable_answers": [
+        "$3,036,000",
+        "3036000",
+        "3,036,000"
+      ],
+      "difficulty": "hard",
+      "tags": [
+        "module5",
+        "overhead_budget"
+      ],
+      "explanation": "Total DLH = Light 65,000\u00d74=260,000 + Heavy 41,000\u00d76=246,000 \u2192 506,000; 506,000\u00d7$6=$3,036,000."
+    },
+    {
+      "question": "Total manufacturing overhead for Year 2 (sum of all four OH items) is:",
+      "question_type": "multiple_choice",
+      "options": [
+        "$4,368,000",
+        "$4,446,500",
+        "$4,536,000",
+        "$4,606,000"
+      ],
+      "correct_answer": "$4,446,500",
+      "difficulty": "hard",
+      "tags": [
+        "module5",
+        "overhead_budget"
+      ],
+      "explanation": "Purch/Handling: $0.50\u00d7(469,000+256,000)=$362,500; Dep/Utils/Inspect: $8\u00d7106,000=$848,000; Shipping: $2\u00d7100,000=$200,000; General: $3,036,000; Total=$4,446,500."
+    },
+    {
+      "question": "{blank} refers to the practice of intentionally underestimating revenues or overestimating costs to make it easier to beat the budget.",
+      "question_type": "fill_blank",
+      "options": [
+        "budgetary slack",
+        "padding the budget"
+      ],
+      "correct_answer": "budgetary slack",
+      "acceptable_answers": [
+        "budgetary slack",
+        "padding the budget"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "module5",
+        "behavior"
+      ],
+      "explanation": "Budgetary slack (padding) can distort performance evaluation and resource allocation."
+    },
+    {
+      "question": "Budgets created with the active participation of all affected employees are generally more effective than top\u2011down budgets. This approach is called:",
+      "question_type": "multiple_choice",
+      "options": [
+        "Zero-based budgeting",
+        "Flexible budgeting",
+        "Participative budgeting",
+        "Rolling budgeting"
+      ],
+      "correct_answer": "Participative budgeting",
+      "difficulty": "easy",
+      "tags": [
+        "module5",
+        "behavior"
+      ],
+      "explanation": "Participative budgeting fosters ownership, realism, and buy-in."
+    },
+    {
+      "question": "Once the budgeting exercise is complete, you should be able to construct pro forma {blank}, a pro forma income statement, and a pro forma cash flow statement.",
+      "question_type": "fill_blank",
+      "options": [
+        "balance sheet",
+        "BS"
+      ],
+      "correct_answer": "balance sheet",
+      "acceptable_answers": [
+        "balance sheet",
+        "pro forma balance sheet"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "module5",
+        "pro_forma"
+      ],
+      "explanation": "The three primary pro forma statements are the balance sheet, income statement, and cash flow statement."
+    }
+  ]
+}

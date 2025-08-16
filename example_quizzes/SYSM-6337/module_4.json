@@ -1,0 +1,271 @@
+{
+  "template_info": {
+    "version": "1.0",
+    "description": "Question template for AI generation or manual creation",
+    "supported_types": [
+      "multiple_choice",
+      "fill_blank"
+    ],
+    "instructions": "Replace the example questions with your own content. Ensure all required fields are present."
+  },
+  "questions": [
+    {
+      "question": "Which TWO criteria must BOTH be true for information to be relevant in decision making?",
+      "question_type": "multiple_choice",
+      "options": [
+        "It is about past costs and is the same across alternatives",
+        "It is an expected future cost or revenue AND it differs among alternatives",
+        "It is precise and audited",
+        "It is qualitative only"
+      ],
+      "correct_answer": "It is an expected future cost or revenue AND it differs among alternatives",
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "relevant information",
+        "decision making"
+      ],
+      "explanation": "Relevance requires futurity and differences between alternatives; past costs that don't change are irrelevant."
+    },
+    {
+      "question": "Relevant information is the predicted {blank} that will differ among the alternatives.",
+      "question_type": "fill_blank",
+      "options": [
+        "future costs and revenues",
+        "future revenues and costs"
+      ],
+      "correct_answer": "future costs and revenues",
+      "acceptable_answers": [
+        "future costs and revenues",
+        "future revenues and costs",
+        "future revenues & costs",
+        "future costs & revenues"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "relevant information"
+      ],
+      "explanation": "Only future costs/revenues that change between options are relevant."
+    },
+    {
+      "question": "Which statement about sunk costs is TRUE?",
+      "question_type": "multiple_choice",
+      "options": [
+        "They are past costs that cannot be changed and should be ignored in decisions",
+        "They are future costs that differ among alternatives",
+        "They represent opportunity costs of capacity",
+        "They are always variable"
+      ],
+      "correct_answer": "They are past costs that cannot be changed and should be ignored in decisions",
+      "difficulty": "easy",
+      "tags": [
+        "sunk costs",
+        "relevant vs irrelevant"
+      ],
+      "explanation": "Sunk costs are historical and unavoidable; they do not differ among alternatives."
+    },
+    {
+      "question": "In the car purchase example, the $12,000 originally paid two years ago is a {blank} cost and should be ignored in the current decision.",
+      "question_type": "fill_blank",
+      "options": [
+        "sunk",
+        "sunk cost"
+      ],
+      "correct_answer": "sunk",
+      "acceptable_answers": [
+        "sunk",
+        "sunk cost"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "sunk costs"
+      ],
+      "explanation": "The purchase price is historical and cannot be changed by any current choice."
+    },
+    {
+      "question": "Opportunity cost is best defined as:",
+      "question_type": "multiple_choice",
+      "options": [
+        "The historical cost recorded in the accounting system",
+        "The potential benefit foregone by choosing one alternative over another",
+        "A future outlay of cash required by a chosen option",
+        "A cost that does not vary with activity"
+      ],
+      "correct_answer": "The potential benefit foregone by choosing one alternative over another",
+      "difficulty": "easy",
+      "tags": [
+        "opportunity cost"
+      ],
+      "explanation": "It's the value of the next-best alternative you give up."
+    },
+    {
+      "question": "If you could earn $20,000 by working instead of attending college, your opportunity cost of attending college is {blank}.",
+      "question_type": "fill_blank",
+      "options": [
+        "$20,000",
+        "20000",
+        "$20k",
+        "20,000"
+      ],
+      "correct_answer": "$20,000",
+      "acceptable_answers": [
+        "$20,000",
+        "20,000",
+        "20000",
+        "$20k",
+        "$20 K",
+        "$20 K."
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "opportunity cost",
+        "applications"
+      ],
+      "explanation": "The foregone earnings represent the opportunity cost."
+    },
+    {
+      "question": "You can fly to Las Vegas for $300 or take a bus for $50. What is the differential cost of flying?",
+      "question_type": "multiple_choice",
+      "options": [
+        "$300",
+        "$50",
+        "$250",
+        "$350"
+      ],
+      "correct_answer": "$250",
+      "difficulty": "medium",
+      "tags": [
+        "differential cost",
+        "incremental analysis"
+      ],
+      "explanation": "Differential cost = $300 − $50 = $250."
+    },
+    {
+      "question": "Costs that differ between alternatives are called {blank} costs.",
+      "question_type": "fill_blank",
+      "options": [
+        "differential",
+        "incremental"
+      ],
+      "correct_answer": "differential",
+      "acceptable_answers": [
+        "differential",
+        "incremental"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "differential cost",
+        "terminology"
+      ],
+      "explanation": "Differential (incremental) costs change depending on the option chosen."
+    },
+    {
+      "question": "Which of the following is an avoidable cost?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Supervisor salary for a product line that will be dropped and not reassigned",
+        "Factory rent under a long-term noncancelable lease",
+        "Depreciation on equipment already owned with no alternative use",
+        "Allocated corporate headquarters salaries"
+      ],
+      "correct_answer": "Supervisor salary for a product line that will be dropped and not reassigned",
+      "difficulty": "medium",
+      "tags": [
+        "avoidable vs unavoidable"
+      ],
+      "explanation": "If the salary will not continue when the product line is eliminated, it is avoidable and relevant."
+    },
+    {
+      "question": "Costs that will not continue if an operation is discontinued are {blank} costs.",
+      "question_type": "fill_blank",
+      "options": [
+        "avoidable",
+        "avoidable costs"
+      ],
+      "correct_answer": "avoidable",
+      "acceptable_answers": [
+        "avoidable",
+        "avoidable costs"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "avoidable costs",
+        "definitions"
+      ],
+      "explanation": "Avoidable = can be eliminated by choosing an alternative."
+    },
+    {
+      "question": "Match the cost hierarchy level with the change that eliminates it: Which level is avoided by eliminating one unit of product?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Batch-level",
+        "Product-level",
+        "Unit-level",
+        "Facility-level"
+      ],
+      "correct_answer": "Unit-level",
+      "difficulty": "medium",
+      "tags": [
+        "cost hierarchy",
+        "ABM"
+      ],
+      "explanation": "Unit-level activities scale with individual units; removing a unit avoids its unit-level costs."
+    },
+    {
+      "question": "In a make-or-buy (outsourcing) decision, which cost comparison is appropriate?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Total manufacturing cost (including unavoidable) vs. purchase price",
+        "Avoidable internal manufacturing costs (including opportunity costs) vs. purchase price",
+        "Historical cost of equipment vs. purchase price",
+        "Allocated fixed overhead vs. supplier setup fee only"
+      ],
+      "correct_answer": "Avoidable internal manufacturing costs (including opportunity costs) vs. purchase price",
+      "difficulty": "medium",
+      "tags": [
+        "outsourcing",
+        "relevant costing"
+      ],
+      "explanation": "Exclude unavoidable internal costs; include opportunity costs when comparing to the buy price."
+    },
+    {
+      "question": "When evaluating make vs. buy, {blank} internal costs should be excluded from the analysis.",
+      "question_type": "fill_blank",
+      "options": [
+        "unavoidable",
+        "unavoidable costs"
+      ],
+      "correct_answer": "unavoidable",
+      "acceptable_answers": [
+        "unavoidable",
+        "unavoidable costs",
+        "sunk",
+        "sunk costs"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "outsourcing",
+        "avoidable vs unavoidable"
+      ],
+      "explanation": "Only costs that will change with the decision (avoidable) are relevant."
+    },
+    {
+      "question": "When a single resource (e.g., machine hours) limits output across products, managers should typically:",
+      "question_type": "multiple_choice",
+      "options": [
+        "Maximize total sales revenue regardless of cost",
+        "Maximize contribution margin per unit of the constrained resource",
+        "Allocate the constraint equally across products",
+        "Focus on reducing fixed costs first"
+      ],
+      "correct_answer": "Maximize contribution margin per unit of the constrained resource",
+      "difficulty": "medium",
+      "tags": [
+        "limited resources",
+        "throughput",
+        "contribution margin"
+      ],
+      "explanation": "With a binding constraint and fixed costs unaffected, choose the mix that maximizes CM per constrained resource."
+    }
+  ]
+}

@@ -1,0 +1,917 @@
+{
+  "export_info": {
+    "quiz_id": 4,
+    "quiz_title": "Computer Architecture Final Quiz",
+    "class_name": "Computer Architecture",
+    "class_id": 2,
+    "exported_at": "2025-08-15T14:54:28.791688",
+    "total_questions": 71,
+    "question_types": [
+      "multiple_choice"
+    ]
+  },
+  "questions": [
+    {
+      "question": "A program that combines object files into an executable program is called a",
+      "question_type": "multiple_choice",
+      "options": [
+        "Debugger",
+        "Linker",
+        "Compiler",
+        "None of the above"
+      ],
+      "correct_answer": "Linker",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "In any numbering system, the radix specifies the range of alphanumeric digits that can be assigned to a single digit position",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The binary representation of decimal 42 is",
+      "question_type": "multiple_choice",
+      "options": [
+        "00101100",
+        "00101011",
+        "00101010",
+        "00011000"
+      ],
+      "correct_answer": "00101010",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "A dynamic link library (dll) is always written in the Java programming language",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Suppose there is a virtual machine containing levels v1 and v2, where v2 is above v1 in the machine hierarchy. The programs written in language v2 can be executed by a program running at level v1",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "A compiler decodes and executed one program statement at a time",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "A virtual machine may be constructed from software",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "To translate an unsigned decimal integer into binary, repeatedly divide the integer by 2, saving each remainder as a binary digit",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The expression not X AND not Y is false when X is false and Y is true",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The 8-bit two's complement of binary 00000010 is",
+      "question_type": "multiple_choice",
+      "options": [
+        "11111110"
+      ],
+      "correct_answer": "11111110",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The ___ coordinates the sequencing of steps involved in executing machine instructions",
+      "question_type": "multiple_choice",
+      "options": [
+        "ALU",
+        "Memory storage unit",
+        "control unit (CU)",
+        "clock"
+      ],
+      "correct_answer": "control unit (CU)",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The arithmetic logic unit performs",
+      "question_type": "multiple_choice",
+      "options": [
+        "addition",
+        "subtraction",
+        "multiplication",
+        "division",
+        "all"
+      ],
+      "correct_answer": "all",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Data travels along a bus with n bits running parallel, where the bus is n bits wide",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the general-purpose reigsters can access ___ bit operands",
+      "question_type": "multiple_choice",
+      "options": [
+        "8",
+        "16",
+        "32",
+        "all"
+      ],
+      "correct_answer": "all",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "requests from hardware devices are called interrupts",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Another name for machine cycle is clock cycle",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Which of the following cache memoories is closer to the cpu",
+      "question_type": "multiple_choice",
+      "options": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ],
+      "correct_answer": "l1",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Which of the following modes povides its host operating system with a mechanism for implementing funtions such as power management and system security?",
+      "question_type": "multiple_choice",
+      "options": [
+        "protected mode",
+        "real-address mode",
+        "system management mode",
+        "all"
+      ],
+      "correct_answer": "system management mode",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "which of the following components have traditionally been found on pc motherboards",
+      "question_type": "multiple_choice",
+      "options": [
+        "memory slots",
+        "cmos ram",
+        "usb connectors for external devices",
+        "all"
+      ],
+      "correct_answer": "all",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "of the four levels of input/output in a computer system, which is the most universal and portable?",
+      "question_type": "multiple_choice",
+      "options": [
+        "bios function level",
+        "operating system function level",
+        "application program level",
+        "hardware level"
+      ],
+      "correct_answer": "application program level",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "an identifier in assembly language may contain other characters besides letters and digits",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the proc directive marks both the beginning and ending of a procedure",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "A code name must end with a colon (:)",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The SDWORD directive is used when defining signed 32-bit integers",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "In the following statement, EAX is called the source operands: mov EBX, EAX",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "If the source code for an assembly language program is modified, ___ to update the program's executable code.",
+      "question_type": "multiple_choice",
+      "options": [
+        "you must run online the assembler",
+        "you must run only the linker",
+        "you must run both the assembler and linker",
+        "you shouldn't run neither the assembler nor the linker"
+      ],
+      "correct_answer": "you must run both the assembler and linker",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The following is a valid data definition statement: varX WORD 100h, 65536",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The following is a valid data definition statement: helloStr SWORD -32768",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The listing file is generated by the ___",
+      "question_type": "multiple_choice",
+      "options": [
+        "Assembler",
+        "Linker",
+        "Compiler",
+        "None of the above"
+      ],
+      "correct_answer": "Assembler",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "___ define 32-bit variables",
+      "question_type": "multiple_choice",
+      "options": [
+        "byte and sbyte",
+        "word and sword",
+        "dword and sdword",
+        "qword and tbyte"
+      ],
+      "correct_answer": "dword and sdword",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the following is a valid local declaration: local parray:dword ptr",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the following is a valid local declarationL local index:dword",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "In 32-bit programs, ADDR and OFFSET return the same value",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "An indirect operand such as [eax+edi] can be passed to the INVOKE directive",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Stack parameters are usually expressed as postiive offsets from ESP",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "When a subrouting argument is passed by value, the calling program pushes the argument's address on the stack",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Arrays are usually passed by reference when calling subroutinges",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the CALL instruction can only have ___ operands",
+      "question_type": "multiple_choice",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correct_answer": "1",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Which instruction terminates the stack frame for a procedure by reversing the action of a preceding ENTER instruction?",
+      "question_type": "multiple_choice",
+      "options": [
+        "end",
+        "leave",
+        "terminate",
+        "invoke"
+      ],
+      "correct_answer": "leave",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Which directive creates a prototype for an existing procedure?",
+      "question_type": "multiple_choice",
+      "options": [
+        "addr",
+        "proto",
+        "proc",
+        "none of the above"
+      ],
+      "correct_answer": "proto",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the following statement will assemble without errors: mov dword ptr [eax], 1234h",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The ___ instruction copies the cPU status flags to the AH registers",
+      "question_type": "multiple_choice",
+      "options": [
+        "xchg",
+        "lahf",
+        "sahf",
+        "hgxc"
+      ],
+      "correct_answer": "sahf",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the EIP register can be the source operand of a ",
+      "question_type": "multiple_choice",
+      "options": [
+        "mov",
+        "add",
+        "sub",
+        "all"
+      ],
+      "correct_answer": "all",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "if AL contains +127 and you add 3 to AL, the Overflow flag will be set",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "When you move a 16-bit constants or an 8-bt constant into a 64-bit register, the upper bits of the destination operand are cleared",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The overflow flag will never be set when subtracting a positive integer from a negative interger",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The sub instruction requires the source operand to be no larger than the destination operand",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The following instructions will set the overflow flag: mov al, 0d7h \n mov al 75h",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "In a stack, the first value pushed on a stack is the last one to be removed",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "When the pop instruction executes, the esp register is incremented after the value it points to is copied from the stack",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the push instruction copies a value from the stack to an operand before decrementing the stack pointer",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Which instruction pushes all of the 32-bit general-purpose registers on the stack",
+      "question_type": "multiple_choice",
+      "options": [
+        "pusha",
+        "pushf",
+        "mova",
+        "popa"
+      ],
+      "correct_answer": "pusha",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the ___ instruction pushes all the 32-bit general-purpose registers on the stack",
+      "question_type": "multiple_choice",
+      "options": [
+        "pushad",
+        "pusha",
+        "push32",
+        "pushfd"
+      ],
+      "correct_answer": "pushad",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "for any two integers n and m, ((n XOR m) XOR m) produces n",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the parity flag indicates whether the lowest byte of a destination operand has an even number of 1 bits",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the XOR instruction inverts each bit in a destination operand",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The JBE instruction is used when comparing unisnged integers",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The OR instruction can be used to find the intersection of two bit-mapped sets",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "What will be the value of BX after the following instructions execute: mov bx, 91BAh \n and bx, 92h",
+      "question_type": "multiple_choice",
+      "options": [
+        "091h",
+        "092h",
+        "093h",
+        "syntax error"
+      ],
+      "correct_answer": "092h",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Which conditional jump instruction executes a branch based on the contents of ecx?",
+      "question_type": "multiple_choice",
+      "options": [
+        "jecx",
+        "je",
+        "jecxz",
+        "jnge"
+      ],
+      "correct_answer": "jecx",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the following code will jump to the label named target: mov eax, -30 \n cmp eax, -50 \n jg Target",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The JAE instruction jumps if the (unsigned) first operand is greater than or equal to the (unsigned) second operands",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The MUL instruction sets the verflow flag if the upper half of the product is not equal to zero",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "RDX will equal 1 after the following instructions have executed: mov rax 0ffff0000ffff0000h \n mov rbx, 2 \n mul rbx",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the binary value of al after the following instructions have executed is : mov al,11000101b \n sar al,1",
+      "question_type": "multiple_choice",
+      "options": [
+        "11100010",
+        "11000101",
+        "11000100",
+        "00000010"
+      ],
+      "correct_answer": "11100010",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The div instruction generates a divide overflow condition when the remainder is too large to fit into the destination operand",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "False",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "The sar instruction is suitable for signed integers",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "What will be the contents of ax after the following operation: mov ax,63h \n mov bl,10h \n div bl",
+      "question_type": "multiple_choice",
+      "options": [
+        "0063h",
+        "6310h",
+        "0306h",
+        "Syntax error"
+      ],
+      "correct_answer": "0306h",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "___ means to move bits right and left inside an operand",
+      "question_type": "multiple_choice",
+      "options": [
+        "bit rotation",
+        "bit string",
+        "bit shifting",
+        "arithmetic shifting"
+      ],
+      "correct_answer": "bit shifting",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "the ___ instruction shifts each bit to the left and copies the highers bit to both the carry flag and the lowest bit position",
+      "question_type": "multiple_choice",
+      "options": [
+        "rcl",
+        "rol",
+        "sal",
+        "rcr"
+      ],
+      "correct_answer": "rol",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    },
+    {
+      "question": "Packed decimal integers store two decimal digits per byte",
+      "question_type": "multiple_choice",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct_answer": "True",
+      "difficulty": "medium",
+      "tags": [],
+      "explanation": ""
+    }
+  ]
+}

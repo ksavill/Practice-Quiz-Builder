@@ -1,0 +1,292 @@
+{
+  "template_info": {
+    "version": "1.0",
+    "description": "Question template for AI generation or manual creation",
+    "supported_types": [
+      "multiple_choice",
+      "fill_blank"
+    ],
+    "instructions": "Replace the example questions with your own content. Ensure all required fields are present."
+  },
+  "questions": [
+    {
+      "question": "Which statement best defines a cost driver?",
+      "question_type": "multiple_choice",
+      "options": [
+        "A fixed percentage markup applied to all products",
+        "Any output measure that causes the use of costly resources",
+        "The maximum capacity of a plant within one period",
+        "A sunk cost that cannot be changed by current decisions"
+      ],
+      "correct_answer": "Any output measure that causes the use of costly resources",
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "cost behavior",
+        "cost driver",
+        "Module 2A"
+      ],
+      "explanation": "A cost driver is an activity/output measure that causes resources to be consumed and costs to be incurred."
+    },
+    {
+      "question": "Cost behavior refers to how an organization's {blank} affect its costs.",
+      "question_type": "fill_blank",
+      "options": [
+        "activities",
+        "activity levels",
+        "operations"
+      ],
+      "correct_answer": "activities",
+      "acceptable_answers": [
+        "activities",
+        "activity levels",
+        "operations"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "definitions",
+        "Module 2A"
+      ],
+      "explanation": "Cost behavior describes how costs change as the level of organizational activity changes."
+    },
+    {
+      "question": "Which of the following is NOT a cost classification based on cost behavior?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Fixed costs",
+        "Variable costs",
+        "Mixed (semi-variable) costs",
+        "Period costs",
+        "Step-fixed costs",
+        "Step-variable costs"
+      ],
+      "correct_answer": "Period costs",
+      "difficulty": "medium",
+      "tags": [
+        "managerial accounting",
+        "cost classification",
+        "Module 2A"
+      ],
+      "explanation": "Period cost is a financial reporting category, not a behavior-based classification. Behavior-based categories include fixed, variable, mixed, step-fixed, and step-variable."
+    },
+    {
+      "question": "Within the relevant range, as activity increases, total fixed cost ____ and fixed cost per unit ____.",
+      "question_type": "multiple_choice",
+      "options": [
+        "increases; increases",
+        "stays the same; decreases",
+        "decreases; stays the same",
+        "stays the same; stays the same"
+      ],
+      "correct_answer": "stays the same; decreases",
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "fixed cost",
+        "relevant range",
+        "Module 2A"
+      ],
+      "explanation": "Total fixed cost is constant within the relevant range, so when activity rises, fixed cost is spread over more units and the per‑unit amount falls."
+    },
+    {
+      "question": "If activity doubles within the relevant range, what happens to total variable cost and unit variable cost, respectively?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Total doubles; unit decreases",
+        "Total doubles; unit stays the same",
+        "Total stays the same; unit doubles",
+        "Total increases less than double; unit increases"
+      ],
+      "correct_answer": "Total doubles; unit stays the same",
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "variable cost",
+        "relevant range",
+        "Module 2A"
+      ],
+      "explanation": "Variable cost changes in direct proportion to activity, but the unit variable cost remains constant within the relevant range."
+    },
+    {
+      "question": "The {blank} specifies the limits of activity within which the assumed cost–cost driver relationship is valid.",
+      "question_type": "fill_blank",
+      "options": [
+        "relevant range",
+        "range of activity",
+        "valid range"
+      ],
+      "correct_answer": "relevant range",
+      "acceptable_answers": [
+        "relevant range",
+        "range of activity",
+        "valid range"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "managerial accounting",
+        "relevant range",
+        "Module 2A"
+      ],
+      "explanation": "Cost behavior assumptions (e.g., fixed/unit variable behavior) hold only within a defined relevant range of activity."
+    },
+    {
+      "question": "Which description best fits step-variable cost behavior?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Total cost remains constant regardless of activity level",
+        "Total cost changes in direct proportion to activity",
+        "Total cost stays flat over a narrow band of activity and then jumps to a higher level for the next band",
+        "Unit cost decreases as more units are produced due to economies of scale"
+      ],
+      "correct_answer": "Total cost stays flat over a narrow band of activity and then jumps to a higher level for the next band",
+      "difficulty": "medium",
+      "tags": [
+        "managerial accounting",
+        "step-variable cost",
+        "Module 2A"
+      ],
+      "explanation": "Step-variable costs change in small 'steps' after short activity intervals; within each narrow band, total cost is flat."
+    },
+    {
+      "question": "Office space is available at $30,000 per year in 1,000 sq ft increments. As more space is rented, total cost increases in chunks. This is an example of {blank} cost.",
+      "question_type": "fill_blank",
+      "options": [
+        "step-fixed",
+        "step fixed",
+        "stepfixed"
+      ],
+      "correct_answer": "step-fixed",
+      "acceptable_answers": [
+        "step-fixed",
+        "step fixed",
+        "stepfixed"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "step-fixed cost",
+        "examples",
+        "Module 2A"
+      ],
+      "explanation": "Large step sizes (e.g., an additional 1,000 sq ft) indicate step‑fixed cost behavior."
+    },
+    {
+      "question": "A practical rule: if the step size is reasonably small, the cost is {blank}; if not, it is step-fixed.",
+      "question_type": "fill_blank",
+      "options": [
+        "step-variable",
+        "step variable"
+      ],
+      "correct_answer": "step-variable",
+      "acceptable_answers": [
+        "step-variable",
+        "step variable"
+      ],
+      "difficulty": "medium",
+      "tags": [
+        "managerial accounting",
+        "step costs",
+        "Module 2A"
+      ],
+      "explanation": "Smaller, more frequent steps imply step-variable costs; larger, infrequent steps imply step-fixed costs."
+    },
+    {
+      "question": "Operating leverage measures the extent to which {blank} are used in an organization.",
+      "question_type": "fill_blank",
+      "options": [
+        "fixed costs",
+        "fixed operating costs"
+      ],
+      "correct_answer": "fixed costs",
+      "acceptable_answers": [
+        "fixed costs",
+        "fixed operating costs"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "operating leverage",
+        "Module 2A"
+      ],
+      "explanation": "Higher reliance on fixed costs increases operating leverage."
+    },
+    {
+      "question": "Operating leverage tends to be greatest in companies that have:",
+      "question_type": "multiple_choice",
+      "options": [
+        "High variable costs and low fixed costs",
+        "High fixed costs relative to variable costs",
+        "No fixed costs at all",
+        "A 1:1 mix of fixed and variable costs"
+      ],
+      "correct_answer": "High fixed costs relative to variable costs",
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "operating leverage",
+        "Module 2A"
+      ],
+      "explanation": "A greater proportion of fixed costs implies higher operating leverage."
+    },
+    {
+      "question": "Which managerial action generally REDUCES risk according to the risk–reward discussion?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Signing a long-term lease for equipment (fixed cost)",
+        "Switching salaried workers to hourly contractors where feasible",
+        "Adding a second factory line to increase capacity",
+        "Increasing advertising on an annual contract"
+      ],
+      "correct_answer": "Switching salaried workers to hourly contractors where feasible",
+      "difficulty": "medium",
+      "tags": [
+        "managerial accounting",
+        "risk management",
+        "cost structure",
+        "Module 2A"
+      ],
+      "explanation": "Converting fixed costs to variable costs (e.g., paying per unit/hour) reduces the risk that benefits fail to cover committed fixed costs."
+    },
+    {
+      "question": "The magnitude of operating leverage (MOL) equals {blank} divided by net income.",
+      "question_type": "fill_blank",
+      "options": [
+        "contribution margin",
+        "CM"
+      ],
+      "correct_answer": "contribution margin",
+      "acceptable_answers": [
+        "contribution margin",
+        "CM"
+      ],
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "formulas",
+        "operating leverage",
+        "Module 2A"
+      ],
+      "explanation": "MOL = Contribution Margin ÷ Net Income."
+    },
+    {
+      "question": "Which statement about variable cost is TRUE within the relevant range?",
+      "question_type": "multiple_choice",
+      "options": [
+        "Total variable cost is constant and unit variable cost changes with activity.",
+        "Both total and unit variable cost change in proportion to activity.",
+        "Total variable cost changes in proportion to activity while unit variable cost remains constant.",
+        "Total variable cost is unrelated to activity."
+      ],
+      "correct_answer": "Total variable cost changes in proportion to activity while unit variable cost remains constant.",
+      "difficulty": "easy",
+      "tags": [
+        "managerial accounting",
+        "variable cost",
+        "relevant range",
+        "Module 2A"
+      ],
+      "explanation": "By definition, variable cost per unit is constant over the relevant range; total variable cost scales with activity."
+    }
+  ]
+}
